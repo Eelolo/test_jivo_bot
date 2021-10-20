@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-s#z*ejhv5lun27o7@6n3s9anx^j=w#uk9x&!df2yx%x*ihfqi@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bot.spb.cadfem-cis.ru', 'bot.spb.cadfem-cis.ru/n1G0JfmBvjnXyjA']
 
 
 # Application definition
@@ -37,9 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'bot.apps.BotConfig',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -76,10 +74,21 @@ WSGI_APPLICATION = 'jivo_test_bot.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'eelolo',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'eelolo',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -108,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
