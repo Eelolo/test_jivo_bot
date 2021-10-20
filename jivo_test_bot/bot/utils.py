@@ -29,10 +29,7 @@ def client_chat_logging(func):
 
 def bot_chat_logging(func):
     def wrapper(bot, **kwargs):
-        if kwargs.get('buttons'):
-            func(bot, message=kwargs['message'], buttons=kwargs['buttons'])
-        else:
-            func(bot, message=kwargs['message'])
+        func(bot, **kwargs)
 
         chat_client, chat = get_or_create_instances(bot.chat_id, bot.client_id)
         Message.objects.create(
