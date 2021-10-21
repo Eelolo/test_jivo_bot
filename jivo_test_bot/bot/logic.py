@@ -88,16 +88,11 @@ class Bot:
         chat.save()
 
     def classify_event(self):
-        # print(self.chat_status)
-        # print(self.message)
-
         if self.event == 'CLIENT_MESSAGE':
             if self.chat_status == 0 or self.message == self.COMMANDS['restart']:
                 self.update_chat_status(1)
                 self.greetings()
                 self.offer_to_help()
-            # if self.message == 'q':
-            #     self.get_related_courses()
             elif self.chat_status == 1 and self.message == self.CLIENT_RESPONSES['help_not_needed'] \
                     or self.message == self.COMMANDS['stop'] \
                     or self.chat_status == 31 and self.message == self.CLIENT_RESPONSES['decline']:
@@ -130,7 +125,6 @@ class Bot:
                 self.update_chat_status(0)
             else:
                 if self.message == self.COMMANDS['again']:
-                    print('self.message == "еще раз":')
                     self.chat_status = self.AGAIN_STATUSES[self.chat_status]
                     self.classify_event()
                 else:
@@ -143,8 +137,6 @@ class Bot:
                 common_dict.update(self.branches_of_application)
                 category = list(common_dict.keys())[list(common_dict.values()).index(self.message)]
                 self.add_to_selected_categories(category)
-
-            # self.update_chat_status(0)
         elif self.event == 'INVITE_AGENT':
             pass
         elif self.event == 'AGENT_JOINED':
