@@ -16,7 +16,7 @@ def deserialize_data(string):
 def client_chat_logging(func):
     def wrapper(request):
         data = deserialize_data(request.body)
-        chat_client, chat = get_or_create_instances(data['chat_id'], data['client_id'])
+        chat, chat_client = get_or_create_instances(data['chat_id'], data['client_id'])
         message = data.get('message').get('text') if data.get('message') else ''
         Message.objects.create(
             client_id=chat_client, chat_id=chat.pk, text=message, bot=False
