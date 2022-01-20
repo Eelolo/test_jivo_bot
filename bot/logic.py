@@ -34,7 +34,6 @@ class Bot:
         for case in step['cases']:
             if succeed:
                 break
-            print(case)
             if case['condition_type'] == 'list' and text.lower() in [x.lower() for x in case['condition']] \
                 or case['condition_type'] == 'text' and text.lower() == case['condition'].lower() \
                 or case['condition_type'] == 'function' \

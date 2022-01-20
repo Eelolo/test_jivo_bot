@@ -29,7 +29,7 @@ STEPS = {
         {
             'condition_type': 'text',
             'condition': 'Нет, спасибо.',
-            'next_step': 2011,
+            'next_step': 0,
             'call_agent': False,
             'process_answer': False
         }],
