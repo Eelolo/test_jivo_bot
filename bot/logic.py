@@ -2,6 +2,8 @@ from bot.utils import get_or_create_instances
 from bot.models import Message
 from bot.steps import STEPS
 from copy import copy
+from .utils import bot_chat_logging, get_timestamp
+import requests
 
 
 class Bot:
@@ -52,7 +54,7 @@ class Bot:
                 # chat.agent_flags = 0
                 chat.save()
                 if case['process_answer']:
-                    process_answer(old_step, chat, chat_id, text)
+                    self.process_answer(old_step, id, client_id)
 
             # if case['call_agent'] and succeed:
             #     call_agent(id, client_id, chat_id)
@@ -62,21 +64,24 @@ class Bot:
 
         return chat
 
-    def process_answer(self, step_number, chat, chat_id, text):
-        from qualificator.bot.logics import get_or_create_qualificator_instance
+    @bot_chat_logging
+    def process_answer(self, step_number, id, client_id):
+        payload = {
+            'event': "BOT_MESSAGE",
+            'id': id,
+            'client_id': client_id,
+            'message': {
+                'type': "BUTTONS",
+                'title': STEPS[step_number]['text'],
+                'buttons': [],
+                'timestamp': get_timestamp(),
+            },
+        }
 
-        if step_number == 11 or step_number == 2011:
-            chat = get_or_create_qualificator_instance(chat, chat_id)
-            chat.form_result.industry_focus.set(IndustryFocus.objects.filter(title__icontains=text))
-            chat.form_result.save()
-        if step_number == 12 or step_number == 2012:
-            chat = get_or_create_qualificator_instance(chat, chat_id)
-            if text != 'Другая':
-                chat.form_result.industry_focus.set(IndustryFocus.objects.filter(title__icontains=text))
-            chat.form_result.save()
-        if step_number == 20:
-            chat.form_result.physic_task_type.set(PhysicTaskType.objects.filter(title__icontains=text))
-            chat.form_result.save()
-        if step_number == 40:
-            chat.form_result.calculations_purpose.set(CalculationsPurpose.objects.filter(title__icontains=text))
-            chat.form_result.save()
+        for text in STEPS[step_number]['answers']:
+            payload['message']['buttons'].append({'text': text})
+
+        requests.post(
+            'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
+            json=payload
+        )
