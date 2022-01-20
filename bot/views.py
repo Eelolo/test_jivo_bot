@@ -25,6 +25,8 @@ class DataFromJivoView(View):
         #
         # return HttpResponse({'result': 'ok'}, status=200)
 
+        from django.http import JsonResponse
+
         try:
             jivo_data, id, client_id, chat_id = process_callback(request)
         except:
