@@ -64,7 +64,7 @@ class Bot:
 
         return chat
 
-    @bot_chat_logging
+    # @bot_chat_logging
     def process_answer(self, step_number, id, client_id):
         payload = {
             'event': "BOT_MESSAGE",
