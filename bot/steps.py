@@ -22,7 +22,7 @@ STEPS = {
         'cases': [{
             'condition_type': 'text',
             'condition': 'Да, пожалуйста.',
-            'next_step': 11,
+            'next_step': 0,
             'call_agent': False,
             'process_answer': True
         },
