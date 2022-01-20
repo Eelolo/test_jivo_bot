@@ -13,6 +13,8 @@ class IndexPageView(View):
 
 
 def process_callback(request):
+    import json
+
     _body = request.body.decode("utf-8")
     jivo_data = json.loads(_body)
 
@@ -48,7 +50,6 @@ class DataFromJivoView(View):
         # return HttpResponse({'result': 'ok'}, status=200)
 
         from django.http import JsonResponse
-
         try:
             jivo_data, id, client_id, chat_id = process_callback(request)
         except:
