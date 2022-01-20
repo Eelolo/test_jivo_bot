@@ -22,7 +22,7 @@ class Bot:
 
     def process_step(self, id, client_id, chat_id, text, chat):
         try:
-            step = STEPS[chat.step]
+            step = STEPS[chat.status]
         except KeyError:
             return chat
         except:
@@ -49,8 +49,8 @@ class Bot:
                     succeed = True
 
             if succeed:
-                chat.step = case['next_step']
-                chat.agent_flags = 0
+                chat.status = case['next_step']
+                # chat.agent_flags = 0
                 chat.save()
                 if case['process_answer']:
                     process_answer(old_step, chat, chat_id, text)
@@ -58,8 +58,8 @@ class Bot:
             # if case['call_agent'] and succeed:
             #     call_agent(id, client_id, chat_id)
 
-            if not succeed:
-                chat.agent_flags += 1
+            # if not succeed:
+            #     chat.agent_flags += 1
 
         return chat
 
