@@ -20,7 +20,14 @@ class DataFromJivoView(View):
         return HttpResponse('Bot sends POST requests here')
 
     def post(self, request):
-        data = deserialize_data(request.body)
-        Bot(data)
+        # data = deserialize_data(request.body)
+        # Bot(data)
+        #
+        # return HttpResponse({'result': 'ok'}, status=200)
 
-        return HttpResponse({'result': 'ok'}, status=200)
+        try:
+            jivo_data, id, client_id, chat_id = process_callback(request)
+        except:
+            return JsonResponse(process_callback(request), status=500)
+
+        print(jivo_data, id, client_id, chat_id)
