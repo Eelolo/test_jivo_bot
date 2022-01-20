@@ -48,4 +48,4 @@ def get_or_create_instances(chat_id, client_id):
     if not chat:
         chat = Chat.objects.create(chat_id=chat_id, client_id=chat_client, status=1)
 
-    return chat_client, chat
+    return chat, chat_client
