@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .utils import client_chat_logging, deserialize_data
-from .old_logic import Bot
+from .logic import Bot
 
 
 class IndexPageView(View):
@@ -21,7 +21,7 @@ class DataFromJivoView(View):
 
     def post(self, request):
         data = deserialize_data(request.body)
-        print('хуй')
+
         # try:
         Bot(data)
         # except:
