@@ -12,6 +12,28 @@ class IndexPageView(View):
         return render(request, "index.html")
 
 
+def process_callback(request):
+    _body = request.body.decode("utf-8")
+    jivo_data = json.loads(_body)
+
+    id = jivo_data.get('id', False)
+    client_id = jivo_data.get('client_id', False)
+    chat_id = jivo_data.get('chat_id', False)
+
+    response = {}
+    if not id:
+        response['error'] = {'code': 1, 'message': 'No id'}
+    elif not client_id:
+        response['error'] = {'code': 2, 'message': 'No client id'}
+    elif not chat_id:
+        response['error'] = {'code': 3, 'message': 'No chat_id'}
+
+    if not response:
+        return jivo_data, id, client_id, chat_id
+
+    return response
+
+
 @method_decorator((csrf_exempt, client_chat_logging), name='dispatch')
 class DataFromJivoView(View):
     http_method_names = ['post']
