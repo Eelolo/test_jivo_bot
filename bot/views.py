@@ -22,9 +22,9 @@ class DataFromJivoView(View):
     def post(self, request):
         data = deserialize_data(request.body)
 
-        try:
-            Bot(data)
-        except:
-            return JsonResponse({'message': 'Internal server error'}, status=500)
+        # try:
+        Bot(data)
+        # except:
+        #     return JsonResponse({'message': 'Internal server error'}, status=500)
 
         return JsonResponse({'message': 'ok'}, status=200)
