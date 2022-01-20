@@ -29,7 +29,7 @@ class Bot:
             raise
 
         succeed = False
-        old_step = copy(chat.step)
+        old_step = copy(chat.status)
 
         for case in step['cases']:
             if succeed:
