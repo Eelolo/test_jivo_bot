@@ -21,7 +21,7 @@ class DataFromJivoView(View):
 
     def post(self, request):
         data = deserialize_data(request.body)
-
+        print('хуй')
         # try:
         Bot(data)
         # except:
