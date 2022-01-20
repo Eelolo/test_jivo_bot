@@ -14,7 +14,6 @@ class Bot:
         chat, chat_client = get_or_create_instances(chat_id, client_id)
 
         if data.get('message', False) and data['message'].get('text', False):
-            Message.objects.create(client_id, chat, text, bot=False)
             text = data['message']['text']
 
         chat = self.process_step(id, client_id, chat_id, text, chat)
