@@ -1,111 +1,3 @@
-STEPS = {
-    0: {
-        'type': 'TEXT',
-        'text_type': 'text',
-        'text': '',
-        'answers_type': 'list',
-        'answers': [],
-        'cases': [{
-            'condition_type': 'any_text',
-            'condition': '',
-            'next_step': 1,
-            'call_agent': False,
-            'process_answer': False
-        }],
-    },
-    1: {
-        'type': 'BUTTONS',
-        'text_type': 'text',
-        'text': 'Здравствуйте! Позвольте помочь вам определиться с выбором продукта.',
-        'answers_type': 'list',
-        'answers': ['Да, пожалуйста.', 'Нет, спасибо.'],
-        'cases': [{
-            'condition_type': 'text',
-            'condition': 'Да, пожалуйста.',
-            'next_step': 0,
-            'call_agent': False,
-            'process_answer': True
-        },
-        {
-            'condition_type': 'text',
-            'condition': 'Нет, спасибо.',
-            'next_step': 0,
-            'call_agent': False,
-            'process_answer': False
-        }],
-    },
-    11: {
-        'type': 'BUTTONS',
-        'text_type': 'text',
-        'text': 'Выберите направление продукта, которое вас интересует:',
-        'answers_type': 'function',
-        'answers': 'get_categories',
-        'cases': [{
-            'condition_type': 'function',
-            'condition': 'get_categories',
-            'next_step': 20,
-            'call_agent': False,
-            'process_answer': True
-        }],
-    },
-    12: {
-        'type': 'BUTTONS',
-        'text_type': 'text',
-        'text': 'Хотите выбрать еще одно направление?',
-        'answers_type': 'function',
-        'answers': 'get_categories',
-        'cases': [{
-            'condition_type': 'function',
-            'condition': 'get_categories',
-            'next_step': 20,
-            'call_agent': False,
-            'process_answer': True
-        },
-        {
-           'condition_type': 'text',
-           'condition': 'Нет, спасибо.',
-           'next_step': 20,
-           'call_agent': False,
-           'process_answer': True
-        }],
-    },
-    20: {
-        'type': 'BUTTONS',
-        'text_type': 'text',
-        'text': 'Выберите отрасль применения продукта, которая вас интересует:',
-        'answers_type': 'function',
-        'answers': 'get_categories',
-        'cases': [{
-            'condition_type': 'function',
-            'condition': 'get_categories',
-            'next_step': 40,
-            'call_agent': False,
-            'process_answer': True
-        },
-        {
-           'condition_type': 'text',
-           'condition': 'Нет, спасибо.',
-           'next_step': 20,
-           'call_agent': False,
-           'process_answer': True
-        }],
-    },
-    40: {
-        'type': 'BUTTONS',
-        'text_type': 'text',
-        'text': 'Хотите выбрать еще одну отрасль применения?',
-        'answers_type': 'function',
-        'answers': 'get_calc_purposes',
-        'cases': [{
-            'condition_type': 'function',
-            'condition': 'get_calc_purposes_dry',
-            'next_step': 50,
-            'call_agent': False,
-            'process_answer': True
-        }],
-     }
-}
-
 # 'greetings': 'Здраствуйте!',
 # 'offer_to_help': 'Позвольте помочь вам определиться с выбором продукта.',
 # 'parting': 'Всего доброго! Я подожду здесь. Всегда буду рад помочь.',
@@ -116,3 +8,152 @@ STEPS = {
 # 'sending_products': 'Продукты подходящие к выбранным категориям:\n',
 # 'offer_to_find_related_courses': 'Хотите посмотреть учебные курсы по найденным продуктам?',
 # 'sending_courses': 'Курсы по найденным продуктам:\n',
+import bot.utils as utils
+
+
+STEPS = {
+    0: {
+        'bot_answer_type': 'TEXT',
+        'bot_answer_text': '',
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: True,
+            'client_answer': '',
+            'next_step': 1,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        }],
+    },
+    1: {
+        'bot_answer_type': 'BUTTONS',
+        'bot_answer_text': 'Здравствуйте! Позвольте помочь вам определиться с выбором продукта.',
+        'buttons': ['Да, пожалуйста.', 'Нет, спасибо.'],
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: string == 'Да, пожалуйста.',
+            'client_answer': 'Да, пожалуйста.',
+            'next_step': 11,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        },
+        {
+            'func_with_condition': lambda string: string == 'Нет, спасибо.',
+            'client_answer': 'Нет, спасибо.',
+            'next_step': 2,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        }],
+    },
+    2: {
+        'bot_answer_type': 'TEXT',
+        'bot_answer_text': 'Всего доброго! Я подожду здесь. Всегда буду рад помочь.',
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: True,
+            'client_answer': '',
+            'next_step': 1,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        }]
+    },
+    11: {
+        'bot_answer_type': 'BUTTONS',
+        'bot_answer_text': 'Выберите направление продукта, которое вас интересует:',
+        'buttons': 'get_directions',
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: string in getattr(utils, 'get_directions')(),
+            'client_answer': '',
+            'next_step': 21,
+            'next_step_without_client_answer': False,
+            'run_function': 'add_to_selected_categories'
+        }],
+    },
+    21: {
+        'bot_answer_type': 'BUTTONS',
+        'bot_answer_text': 'Хотите выбрать еще одно направление?',
+        'buttons': ['Да, пожалуйста.', 'Нет, спасибо.'],
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: string == 'Да, пожалуйста.',
+            'client_answer': 'Да, пожалуйста.',
+            'next_step': 11,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        },
+        {
+            'func_with_condition': lambda string: string == 'Нет, спасибо.',
+            'client_answer': 'Нет, спасибо.',
+            'next_step': 31,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        }],
+    },
+    31: {
+        'bot_answer_type': 'BUTTONS',
+        'bot_answer_text': 'Выберите отрасль применения продукта, которая вас интересуют:',
+        'buttons': 'get_branches_of_application',
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: string in getattr(utils, 'get_branches_of_application')(),
+            'client_answer': '',
+            'next_step': 41,
+            'next_step_without_client_answer': False,
+            'run_function': 'add_to_selected_categories'
+        }],
+    },
+    41: {
+        'bot_answer_type': 'BUTTONS',
+        'bot_answer_text': 'Хотите выбрать еще одну отрасль применения?',
+        'buttons': ['Да, пожалуйста.', 'Нет, спасибо.'],
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: string == 'Да, пожалуйста.',
+            'client_answer': 'Да, пожалуйста.',
+            'next_step': 31,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        },
+        {
+            'func_with_condition': lambda string: string == 'Нет, спасибо.',
+            'client_answer': 'Нет, спасибо.',
+            'next_step': 51,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        }],
+    },
+    51: {
+        'bot_answer_type': 'TEXT',
+        'bot_answer_text': 'get_products_from_categories_text',
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: True,
+            'client_answer': '',
+            'next_step': 61,
+            'next_step_without_client_answer': True,
+            'run_function': ''
+        }]
+    },
+    61: {
+        'bot_answer_type': 'BUTTONS',
+        'bot_answer_text': 'Хотите посмотреть учебные курсы по найденным продуктам?',
+        'buttons': ['Да, пожалуйста.', 'Нет, спасибо.'],
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: string == 'Да, пожалуйста.',
+            'client_answer': 'Да, пожалуйста.',
+            'next_step': 71,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        },
+        {
+            'func_with_condition': lambda string: string == 'Нет, спасибо.',
+            'client_answer': 'Нет, спасибо.',
+            'next_step': 2,
+            'next_step_without_client_answer': False,
+            'run_function': ''
+        }],
+    },
+    71: {
+        'bot_answer_type': 'TEXT',
+        'bot_answer_text': 'get_related_courses',
+        'client_answer_cases': [{
+            'func_with_condition': lambda string: True,
+            'client_answer': '',
+            'next_step': 2,
+            'next_step_without_client_answer': True,
+            'run_function': ''
+        }]
+    }
+}
