@@ -35,7 +35,7 @@ class Step:
             raise TypeError('Buttons must me a string collection.')
 
     def add_client_answer_case(self, method):
-        # print(f'{method.__name__} in dir({self}) {method.__name__ in dir(self)}')
+        print(f'{method.__name__} in dir({self}) {method.__name__ in dir(self)}')
         try:
             method('Its a object id callable test')
             if not method.__name__ in [case.__name__ for case in self.__client_answer_cases] and method.__name__ in dir({self}):
