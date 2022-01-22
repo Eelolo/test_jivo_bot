@@ -61,7 +61,7 @@ class Bot:
             },
         }
 
-        = requests.post(
+        requests.post(
             'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
             json=payload
         )
