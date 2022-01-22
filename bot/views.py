@@ -4,7 +4,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .utils import client_chat_logging, deserialize_data
-from .logic import Bot
+from bot.cadfem_jivo_bot.bot import Bot
+from .steps import *
 
 
 class IndexPageView(View):
@@ -23,7 +24,20 @@ class DataFromJivoView(View):
         data = deserialize_data(request.body)
 
         # try:
-        Bot(data)
+        Bot(
+            data,
+            {
+                'OfferToHelpStep': OfferToHelpStep,
+                'PartingStep': PartingStep,
+                'OfferToChooseDirectionStep': OfferToChooseDirectionStep,
+                'OfferToChooseMoreDirectionsStep': OfferToChooseMoreDirectionsStep,
+                'OfferToChooseBranchOfApplicationStep': OfferToChooseBranchOfApplicationStep,
+                'OfferToChooseMoreBranchesOfApplicationStep': OfferToChooseMoreBranchesOfApplicationStep,
+                'SendingProductsStep': SendingProductsStep,
+                'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep,
+                'SendingCoursesStep': SendingCoursesStep,
+            }
+        )
         # except:
         #     return JsonResponse({'message': 'Internal server error'}, status=500)
 

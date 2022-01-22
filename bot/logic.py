@@ -1,9 +1,5 @@
-import pprint
-
 from bot.utils import get_or_create_instances
-from bot.models import Message
-from bot.steps import STEPS
-from copy import copy
+from bot.old_steps import STEPS
 from .utils import bot_chat_logging, get_timestamp
 import requests
 import bot.utils as utils
