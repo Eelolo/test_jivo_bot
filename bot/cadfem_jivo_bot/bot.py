@@ -27,10 +27,10 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step]()
-        print(self.chat.step)
-        print(step.client_answer_cases)
+        # print(self.chat.step)
+        # print(step.client_answer_cases)
         for case in step.client_answer_cases:
-            print(case)
+            # print(case)
             case = case(self.message_text)
 
             if case:
