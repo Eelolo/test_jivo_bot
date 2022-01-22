@@ -40,9 +40,9 @@ class Bot:
     #                 self.process_step()
     #             break
 
-def process_step(self):
-    step = self.steps[self.chat.step]()
-    print(step)
+    def process_step(self):
+        step = self.steps[self.chat.step]()
+        print(step)
 
     # @bot_chat_logging
     def process_answer(self, step):
