@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 class Chat(models.Model):
     chat_id = models.PositiveIntegerField(verbose_name='Jivo chat id')
     client_id = models.ForeignKey('ChatClient', on_delete=models.CASCADE)
-    step = models.CharField(max_length=150)
+    step = models.CharField(max_length=150, default='')
     selected_categories = ArrayField(
         models.PositiveIntegerField(verbose_name='category id'),
         default=list
