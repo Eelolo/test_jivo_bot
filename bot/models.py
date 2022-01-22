@@ -22,6 +22,6 @@ class ChatClient(models.Model):
 class Message(models.Model):
     client_id = models.ForeignKey('ChatClient', on_delete=models.CASCADE)
     chat = models.ForeignKey('Chat', on_delete=models.CASCADE)
-    text = models.TextField(default='')
+    text = models.TextField(default='OfferToHelpStep')
     bot = models.BooleanField()  # если True, означает, что это сообщение от бота к пользователю
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
