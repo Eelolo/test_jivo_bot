@@ -28,6 +28,7 @@ class Bot:
             if case:
                 self.chat.step = case['next_step']
                 self.chat.save()
+                print(case['next_step'])
                 self.process_answer(step)
                 if case['right_away']:
                     self.process_step()
