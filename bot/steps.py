@@ -43,8 +43,6 @@ class PartingStep(Step):
         self.add_client_answer_case(self.run_anyway)
 
     def run_anyway(self, string):
-        print('PartingStep run_anyway func')
-        print(self, string)
         return {'next_step': 'OfferToHelpStep', 'right_away': False}
 
 
