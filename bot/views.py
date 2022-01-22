@@ -27,15 +27,15 @@ class DataFromJivoView(View):
         Bot(
             data,
             {
-                'OfferToHelpStep': OfferToHelpStep(),
-                'PartingStep': PartingStep(),
-                'OfferToChooseDirectionStep': OfferToChooseDirectionStep(),
-                'OfferToChooseMoreDirectionsStep': OfferToChooseMoreDirectionsStep(),
-                'OfferToChooseBranchOfApplicationStep': OfferToChooseBranchOfApplicationStep(),
-                'OfferToChooseMoreBranchesOfApplicationStep': OfferToChooseMoreBranchesOfApplicationStep(),
-                'SendingProductsStep': SendingProductsStep(),
-                'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep(),
-                'SendingCoursesStep': SendingCoursesStep(),
+                'OfferToHelpStep': OfferToHelpStep,
+                'PartingStep': PartingStep,
+                'OfferToChooseDirectionStep': OfferToChooseDirectionStep,
+                'OfferToChooseMoreDirectionsStep': OfferToChooseMoreDirectionsStep,
+                'OfferToChooseBranchOfApplicationStep': OfferToChooseBranchOfApplicationStep,
+                'OfferToChooseMoreBranchesOfApplicationStep': OfferToChooseMoreBranchesOfApplicationStep,
+                'SendingProductsStep': SendingProductsStep,
+                'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep,
+                'SendingCoursesStep': SendingCoursesStep,
             }
         )
         # except:

@@ -4,7 +4,6 @@ from bot.utils import bot_chat_logging, get_timestamp
 import requests
 from bot.models import Chat
 
-
 class Bot:
     def __init__(self, data, steps):
         self.event_id = data.get('id', False)
@@ -42,7 +41,7 @@ class Bot:
     #             break
 
     def process_step(self):
-        step = self.steps[self.chat.step]
+        step = self.steps[self.chat.step]()
 
         for case in step.client_answer_cases:
             case = case(self.message_text)
