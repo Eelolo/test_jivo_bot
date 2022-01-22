@@ -66,7 +66,7 @@ class Bot:
             'client_id': self.client_id,
             'message': {
                 'type': "BUTTONS",
-                'title': STEPS[step]['bot_answer_text'],
+                'title': step.answer_text,
                 'buttons': [],
                 'timestamp': get_timestamp(),
             },
