@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'jivo_test_bot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'eelolo',
+        'NAME': 'jivo_site_bot',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'eelolo',
         'PASSWORD': 'password',
