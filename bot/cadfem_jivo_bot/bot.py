@@ -45,7 +45,7 @@ class Bot:
 
         for case in step.client_answer_cases:
             case = case(self.message_text)
-            print(case)
+            print(step.client_answer_cases)
 
             # if case:
             #     self.set_chat_step(case['next_step'])
