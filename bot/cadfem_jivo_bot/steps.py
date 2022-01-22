@@ -37,8 +37,7 @@ class Step:
     def add_client_answer_case(self, method):
         try:
             method('Its a object id callable test')
-            if method not in self.__client_answer_cases:
-                self.__client_answer_cases.append(method)
+            self.__client_answer_cases.append(method)
         except TypeError:
             raise ValueError(f'Answer case must be a function.')
 
