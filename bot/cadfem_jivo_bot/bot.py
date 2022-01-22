@@ -32,12 +32,12 @@ class Bot:
             case = case(self.message_text)
 
             if case:
-                self.set_chat_step(case['next_step'])
+                # self.set_chat_step(case['next_step'])
                 print(case['next_step'])
-                step = self.steps[self.chat.step](**self.kwargs)
-                self.process_answer(step)
-                if case['right_away']:
-                    self.process_step()
+                # step = self.steps[self.chat.step](**self.kwargs)
+                # self.process_answer(step)
+                # if case['right_away']:
+                #     self.process_step()
                 break
 
     # @bot_chat_logging
