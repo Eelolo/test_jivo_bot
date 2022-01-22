@@ -41,6 +41,7 @@ class Step:
         except AttributeError:
             raise ValueError(f'Answer case must be a method of {self.__name__}.')
         except TypeError:
+            print(method)
             raise ValueError(f'Answer case must be a function.')
 
     @property
