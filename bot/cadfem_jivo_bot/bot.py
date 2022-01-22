@@ -22,14 +22,19 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
-        print(self.chat.step)
+        print(f'step from db: {self.chat.step}')
+        print('loop starting ...')
         for case in step.client_answer_cases:
             case = case(self.message_text)
             if case:
+                print(f'case: {case}')
                 self.chat.step = case['next_step']
                 self.chat.save()
+                print(f'{case["next_step"]} saved in db')
                 step = self.steps[self.chat.step](**self.kwargs)
+                print(f'created new step instance of class name {self.chat.step}')
                 self.process_answer(step)
+                print(f'runned answer with step {step}')
                 if case['right_away']:
                     self.process_step()
                 break
@@ -54,10 +59,12 @@ class Bot:
             },
         }
 
-        requests.post(
+        r = requests.post(
             'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
             json=payload
         )
+
+        print(r.content)
 
     # @bot_chat_logging
     def send_buttons_message(self, step):
@@ -76,7 +83,9 @@ class Bot:
         for button_text in step.buttons:
             payload['message']['buttons'].append({'text': button_text})
 
-        requests.post(
+        r = requests.post(
             'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
             json=payload
         )
+
+        print(r.content)
