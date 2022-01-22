@@ -26,10 +26,10 @@ class Bot:
         for case in step.client_answer_cases:
             case = case(self.message_text, **self.kwargs)
             if case:
+                self.process_answer(step)
                 self.chat.step = case['next_step']
                 self.chat.save()
                 print(case['next_step'])
-                self.process_answer(step)
                 if case['right_away']:
                     self.process_step()
                 break
