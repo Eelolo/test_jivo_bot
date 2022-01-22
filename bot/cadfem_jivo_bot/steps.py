@@ -37,8 +37,7 @@ class Step:
     def add_client_answer_case(self, method):
         try:
             print(dir(self))
-            print(method in dir(self))
-            getattr(self, method)(self, 'Function is my method test')
+            print(method)
             # self.__client_answer_cases.append(method)
         except AttributeError:
             raise ValueError(f'Answer case must be a method of {self.__name__}.')
