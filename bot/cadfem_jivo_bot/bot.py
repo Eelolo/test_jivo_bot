@@ -33,6 +33,7 @@ class Bot:
 
             if case:
                 self.set_chat_step(case['next_step'])
+                print(case['next_step'])
                 step = self.steps[self.chat.step](**self.kwargs)
                 print(step)
                 self.process_answer(step)
@@ -60,12 +61,10 @@ class Bot:
             },
         }
 
-        r = requests.post(
+        = requests.post(
             'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
             json=payload
         )
-
-        print('from text msg', r.content)
 
     # @bot_chat_logging
     def send_buttons_message(self, step):
@@ -84,9 +83,7 @@ class Bot:
         for button_text in step.buttons:
             payload['message']['buttons'].append({'text': button_text})
 
-        r = requests.post(
+        requests.post(
             'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
             json=payload
         )
-
-        print('from btn msg', r.content)
