@@ -2,7 +2,7 @@ from bot.utils import get_or_create_instances
 from bot.old_steps import STEPS
 from bot.utils import bot_chat_logging, get_timestamp
 import requests
-
+from bot.models import Chat
 
 class Bot:
     def __init__(self, data, steps):
@@ -29,7 +29,8 @@ class Bot:
             if case:
                 self.chat.step = case['next_step']
                 print(f'saved in db: {case["next_step"]}')
-                self.chat = self.chat.save()
+                self.chat.save()
+                self.chat = Chat.objects.get(chat_id=self.chat_id)
                 step = self.steps[self.chat.step](**self.kwargs)
                 print(f'new step: {step}')
                 # self.process_answer(step)
