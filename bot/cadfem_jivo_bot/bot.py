@@ -22,19 +22,16 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
-        print(f'step from db: {self.chat.step}')
-        print('loop starting ...')
+        print(f'step from db: {step}')
+
         for case in step.client_answer_cases:
             case = case(self.message_text)
             if case:
-                print(f'case: {case}')
                 self.chat.step = case['next_step']
                 self.chat.save()
-                print(f'{case["next_step"]} saved in db')
                 step = self.steps[self.chat.step](**self.kwargs)
-                print(f'created new step instance of class name {self.chat.step}')
-                self.process_answer(step)
-                print(f'runned answer with step {step}')
+                print(f'new step: {step}')
+                # self.process_answer(step)
                 if case['right_away']:
                     self.process_step()
                 break
@@ -64,7 +61,7 @@ class Bot:
             json=payload
         )
 
-        # print(r.content)
+        print('from text msg', r.content)
 
     # @bot_chat_logging
     def send_buttons_message(self, step):
@@ -88,4 +85,4 @@ class Bot:
             json=payload
         )
 
-        print(r.content)
+        print('from btn msg', r.content)

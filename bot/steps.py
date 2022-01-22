@@ -23,17 +23,17 @@ class OfferToHelpStep(Step):
     def __init__(self, **kwargs):
         self.set_answer_text('Здравствуйте! Позвольте помочь вам определиться с выбором продукта.')
         self.set_send_buttons(True)
-        self.set_buttons(['Да, пожалуйста.', 'Нет, спасибо.'])
+        self.set_buttons(['да', 'нет'])
 
         self.add_client_answer_case(self.accept)
         self.add_client_answer_case(self.decline)
 
     def accept(self, string):
-        if string == 'Да, пожалуйста.':
+        if string == 'да':
             return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
 
     def decline(self, string):
-        if string == 'Нет, спасибо.':
+        if string == 'нет':
             return {'next_step': 'PartingStep', 'right_away': False}
 
 
@@ -67,17 +67,17 @@ class OfferToChooseMoreDirectionsStep(Step):
     def __init__(self, **kwargs):
         self.set_answer_text('Хотите выбрать еще одно направление?')
         self.set_send_buttons(True)
-        self.set_buttons(['Да, пожалуйста.', 'Нет, спасибо.'])
+        self.set_buttons(['да', 'нет'])
 
         self.add_client_answer_case(self.accept)
         self.add_client_answer_case(self.decline)
 
     def accept(self, string):
-        if string == 'Да, пожалуйста.':
+        if string == 'да':
             return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
 
     def decline(self, string):
-        if string == 'Нет, спасибо.':
+        if string == 'нет':
             return {'next_step': 'OfferToChooseBranchOfApplicationStep', 'right_away': False}
 
 
@@ -102,17 +102,17 @@ class OfferToChooseMoreBranchesOfApplicationStep(Step):
     def __init__(self, **kwargs):
         self.set_answer_text('Хотите выбрать еще одну отрасль применения?')
         self.set_send_buttons(True)
-        self.set_buttons(['Да, пожалуйста.', 'Нет, спасибо.'])
+        self.set_buttons(['да', 'нет'])
 
         self.add_client_answer_case(self.accept)
         self.add_client_answer_case(self.decline)
 
     def accept(self, string):
-        if string == 'Да, пожалуйста.':
+        if string == 'да':
             return {'next_step': 'OfferToChooseBranchOfApplicationStep', 'right_away': False}
 
     def decline(self, string):
-        if string == 'Нет, спасибо.':
+        if string == 'нет':
             return {'next_step': 'SendingProductsStep', 'right_away': False}
 
 
@@ -129,17 +129,17 @@ class OfferToFindRelatedCoursesStep(Step):
     def __init__(self, **kwargs):
         self.set_answer_text('Хотите посмотреть учебные курсы по найденным продуктам?')
         self.set_send_buttons(True)
-        self.set_buttons(['Да, пожалуйста.', 'Нет, спасибо.'])
+        self.set_buttons(['да', 'нет'])
 
         self.add_client_answer_case(self.accept)
         self.add_client_answer_case(self.decline)
 
     def accept(self, string):
-        if string == 'Да, пожалуйста.':
+        if string == 'да':
             return {'next_step': 'SendingCoursesStep', 'right_away': False}
 
     def decline(self, string):
-        if string == 'Нет, спасибо.':
+        if string == 'нет':
             return {'next_step': 'PartingStep', 'right_away': False}
 
 
