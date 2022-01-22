@@ -13,7 +13,10 @@
 #
 # }
 from bot.cadfem_jivo_bot.steps import Step
-from bot.utils import get_directions, add_to_selected_categories, get_products_from_categories_text, get_related_courses
+from bot.utils import (
+    get_directions, get_branches_of_application, add_to_selected_categories,
+    get_products_from_categories_text, get_related_courses
+)
 
 
 class OfferToHelpStep(Step):
@@ -81,7 +84,7 @@ class OfferToChooseBranchOfApplicationStep(Step):
         self.set_answer_text('Выберите отрасль применения продукта, которая вас интересует:')
         self.set_send_buttons(True)
 
-        self.get_branches_of_application = self.get_branches_of_application()
+        self.get_branches_of_application = get_branches_of_application()
         self.set_buttons(self.get_branches_of_application)
 
         self.add_client_answer_case(self.selected_in_product_branches_of_application)
