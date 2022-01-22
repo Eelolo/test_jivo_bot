@@ -27,13 +27,14 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step]()
-
+        print(step)
         for case in step.client_answer_cases:
             case = case(self.message_text)
 
             if case:
                 self.set_chat_step(case['next_step'])
                 step = self.steps[self.chat.step](**self.kwargs)
+                print(step)
                 self.process_answer(step)
                 if case['right_away']:
                     self.process_step()
