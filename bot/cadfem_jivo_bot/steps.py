@@ -36,7 +36,7 @@ class Step:
 
     def add_client_answer_case(self, method):
         # print(self)
-        print(method.__name__ in dir(self))
+        print(f'{method.__name__} in dir({self}) {method.__name__ in dir(self)}')
         try:
             method('Its a object id callable test')
             if not method.__name__ in [case.__name__ for case in self.__client_answer_cases]:
