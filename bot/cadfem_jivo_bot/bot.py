@@ -35,6 +35,7 @@ class Bot:
 
             if case:
                 self.set_chat_step(case['next_step'])
+                print(step.client_answer_cases)
                 # step = self.steps[self.chat.step](**self.kwargs)
                 # self.process_answer(step)
                 # if case['right_away']:
