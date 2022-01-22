@@ -64,7 +64,7 @@ class Bot:
             json=payload
         )
 
-        print(r.content)
+        # print(r.content)
 
     # @bot_chat_logging
     def send_buttons_message(self, step):
