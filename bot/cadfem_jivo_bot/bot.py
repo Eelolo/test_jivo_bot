@@ -26,6 +26,7 @@ class Bot:
         for case in step.client_answer_cases:
             case = case(self.message_text, **self.kwargs)
             if case:
+                print(case['next_step'])
                 self.chat.step = case['next_step']
                 self.chat.save()
                 self.process_answer(self.steps[self.chat.step]())
