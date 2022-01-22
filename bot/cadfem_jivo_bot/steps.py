@@ -35,14 +35,13 @@ class Step:
             raise TypeError('Buttons must me a string collection.')
 
     def add_client_answer_case(self, method):
-        # try:
-        #     getattr(self, method)(self, 'Function is my method test')
-        self.__client_answer_cases.append(method)
-        # except AttributeError:
-        #     raise ValueError(f'Answer case must be a method of {self.__name__}.')
-        # except TypeError:
-        #     print(method)
-        #     raise ValueError(f'Answer case must be a function.')
+        try:
+            getattr(self, method)(self, 'Function is my method test')
+            self.__client_answer_cases.append(method)
+        except AttributeError:
+            raise ValueError(f'Answer case must be a method of {self.__name__}.')
+        except TypeError:
+            raise ValueError(f'Answer case must be a function.')
 
     @property
     def client_answer_cases(self):

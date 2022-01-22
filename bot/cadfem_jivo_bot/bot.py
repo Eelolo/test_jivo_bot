@@ -4,6 +4,7 @@ from bot.utils import bot_chat_logging, get_timestamp
 import requests
 from bot.models import Chat
 
+
 class Bot:
     def __init__(self, data, steps):
         self.event_id = data.get('id', False)
