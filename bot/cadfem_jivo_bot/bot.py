@@ -28,7 +28,7 @@ class Bot:
             case = case(self.message_text)
             if case:
                 self.chat.step = case['next_step']
-                print(f'saved in db{case["next_step"]}')
+                print(f'saved in db: {case["next_step"]}')
                 self.chat.save()
                 step = self.steps[self.chat.step](**self.kwargs)
                 print(f'new step: {step}')
