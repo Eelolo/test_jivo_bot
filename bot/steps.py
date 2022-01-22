@@ -40,6 +40,7 @@ class OfferToHelpStep(Step):
 class PartingStep(Step):
     def __init__(self):
         self.set_answer_text('Всего доброго! Я подожду здесь. Всегда буду рад помочь.')
+        self.add_client_answer_case(self.run_anyway)
 
     def run_anyway(self, **kwargs):
         return {'next_step': 'OfferToHelpStep', 'right_away': False}
