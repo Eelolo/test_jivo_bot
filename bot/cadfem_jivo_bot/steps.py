@@ -44,6 +44,7 @@ class Step:
         # except TypeError:
         #     raise ValueError(f'Answer case must be a function.')
         method(123)
+
     @property
     def client_answer_cases(self):
         return self.__client_answer_cases
