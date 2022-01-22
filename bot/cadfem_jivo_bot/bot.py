@@ -25,36 +25,19 @@ class Bot:
         self.chat.save()
         self.chat = Chat.objects.get(chat_id=self.chat_id)
 
-    # def process_step(self):
-    #     step = self.steps[self.chat.step](**self.kwargs)
-    #     print(f'step from db: {step}')
-    #
-    #     for case in step.client_answer_cases:
-    #         case = case(self.message_text)
-    #         if case:
-    #             self.set_chat_step(case['next_step'])
-    #             step = self.steps[self.chat.step](**self.kwargs)
-    #             print(f'new step: {step}')
-    #             # self.process_answer(step)
-    #             if case['right_away']:
-    #                 self.process_step()
-    #             break
-
     def process_step(self):
         step = self.steps[self.chat.step]()
 
         for case in step.client_answer_cases:
             case = case(self.message_text)
-            print(step.client_answer_cases)
 
-            # if case:
-            #     self.set_chat_step(case['next_step'])
-            #     step = self.steps[self.chat.step](**self.kwargs)
-            #     print(f'new step: {step}')
-            #     # self.process_answer(step)
-            #     if case['right_away']:
-            #         self.process_step()
-            #     break
+            if case:
+                self.set_chat_step(case['next_step'])
+                step = self.steps[self.chat.step](**self.kwargs)
+                self.process_answer(step)
+                if case['right_away']:
+                    self.process_step()
+                break
 
     # @bot_chat_logging
     def process_answer(self, step):
