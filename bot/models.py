@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 class Chat(models.Model):
     chat_id = models.PositiveIntegerField(verbose_name='Jivo chat id')
     client_id = models.ForeignKey('ChatClient', on_delete=models.CASCADE)
-    step = models.CharField(max_length=150, default='')
+    step = models.CharField(max_length=150, default='OfferToHelpStep')
     selected_categories = ArrayField(
         models.PositiveIntegerField(verbose_name='category id'),
         default=list
@@ -22,6 +22,6 @@ class ChatClient(models.Model):
 class Message(models.Model):
     client_id = models.ForeignKey('ChatClient', on_delete=models.CASCADE)
     chat = models.ForeignKey('Chat', on_delete=models.CASCADE)
-    text = models.TextField(default='OfferToHelpStep')
+    text = models.TextField(default='')
     bot = models.BooleanField()  # если True, означает, что это сообщение от бота к пользователю
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
