@@ -47,3 +47,4 @@ class Step:
     @property
     def client_answer_cases(self):
         return self.__client_answer_cases
+python manage.py runserver 192.168.1.138:64517
