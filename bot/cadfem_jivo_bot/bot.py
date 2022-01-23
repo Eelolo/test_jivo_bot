@@ -29,7 +29,8 @@ class Bot:
             if case:
                 self.chat.step = case['next_step']
                 self.chat.save()
-                self.process_answer(step)
+                if not case.get('silent', False):
+                    self.process_answer(step)
                 break
 
     # @bot_chat_logging

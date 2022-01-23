@@ -43,7 +43,7 @@ class OfferToChooseDirectionStep(Step):
 
     def decline(self, string):
         if string == 'нет':
-            return {'next_step': 'PartingStep', 'right_away': False}
+            return {'next_step': 'PartingStep', 'right_away': False, 'silent': True}
 
 
 class OfferToChooseMoreDirectionsStep(Step):
