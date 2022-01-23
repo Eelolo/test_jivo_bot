@@ -26,8 +26,7 @@ class Bot:
 
         self.process_step()
 
-    def client_chat_logging(func):
-        print(func)
+    def client_chat_logging(self, func):
         def wrapper(bot):
             func(bot)
             Message.objects.create(
@@ -37,7 +36,7 @@ class Bot:
 
         return wrapper
 
-    def bot_chat_logging(func):
+    def bot_chat_logging(self, func):
         def wrapper(bot):
             func(bot)
             Message.objects.create(
