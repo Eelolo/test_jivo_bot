@@ -4,13 +4,17 @@ from bot.utils import bot_chat_logging, get_timestamp
 import requests
 from bot.models import Chat
 
+
 class Bot:
-    def __init__(self, data, steps):
+    def __init__(self, data, first_step, steps):
         self.event_id = data.get('id', False)
         self.client_id = data.get('client_id', False)
         self.chat_id = data.get('chat_id', False)
         self.message_text = data['message']['text'] if data.get('message', False) and data['message'].get('text', False) else ''
         self.chat, self.client = get_or_create_instances(self.chat_id, self.client_id)
+        if not self.chat.step:
+            self.chat.step = first_step
+            self.chat.save()
         self.steps = steps
         self.kwargs = {
             'event_id': self.event_id,

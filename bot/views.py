@@ -26,6 +26,7 @@ class DataFromJivoView(View):
         # try:
         Bot(
             data,
+            'OfferToHelpStep',
             {
                 'OfferToHelpStep': OfferToHelpStep,
                 'PartingStep': PartingStep,
