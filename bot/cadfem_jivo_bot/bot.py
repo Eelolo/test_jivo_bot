@@ -27,6 +27,7 @@ class Bot:
         self.process_step()
 
     def process_step(self):
+        print(self.step.client_answer_cases)
         for case in self.step.client_answer_cases:
             case = case(self.message_text)
 
