@@ -23,23 +23,19 @@ class DataFromJivoView(View):
     def post(self, request):
         data = deserialize_data(request.body)
 
-        # try:
-        Bot(
-            data,
-            'PartingStep',
-            {
-                'OfferToHelpStep': OfferToHelpStep,
-                'PartingStep': PartingStep,
-                'OfferToChooseDirectionStep': OfferToChooseDirectionStep,
-                'OfferToChooseMoreDirectionsStep': OfferToChooseMoreDirectionsStep,
-                'OfferToChooseBranchOfApplicationStep': OfferToChooseBranchOfApplicationStep,
-                'OfferToChooseMoreBranchesOfApplicationStep': OfferToChooseMoreBranchesOfApplicationStep,
-                'SendingProductsStep': SendingProductsStep,
-                'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep,
-                'SendingCoursesStep': SendingCoursesStep,
-            }
-        )
-        # except:
-        #     return JsonResponse({'message': 'Internal server error'}, status=500)
+        steps = {
+            'OfferToHelpStep': OfferToHelpStep, 'PartingStep': PartingStep,
+            'OfferToChooseDirectionStep': OfferToChooseDirectionStep,
+            'OfferToChooseMoreDirectionsStep': OfferToChooseMoreDirectionsStep,
+            'OfferToChooseBranchOfApplicationStep': OfferToChooseBranchOfApplicationStep,
+            'OfferToChooseMoreBranchesOfApplicationStep': OfferToChooseMoreBranchesOfApplicationStep,
+            'SendingProductsStep': SendingProductsStep, 'SendingCoursesStep': SendingCoursesStep,
+            'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep,
+        }
+
+        try:
+            Bot(data, first_step='PartingStep', steps=steps)
+        except:
+            return JsonResponse({'message': 'Internal server error'}, status=500)
 
         return JsonResponse({'message': 'ok'}, status=200)

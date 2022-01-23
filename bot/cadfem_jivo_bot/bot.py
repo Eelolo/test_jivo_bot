@@ -40,7 +40,7 @@ class Bot:
                     self.process_step()
                 break
 
-    # @bot_chat_logging
+    @bot_chat_logging
     def process_answer(self):
         payload = {
             'event': "BOT_MESSAGE",
