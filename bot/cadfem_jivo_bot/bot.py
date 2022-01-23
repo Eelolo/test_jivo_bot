@@ -22,6 +22,7 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
+        print(self.chat.step)
         for case in step.client_answer_cases:
             case = case(self.message_text)
 
