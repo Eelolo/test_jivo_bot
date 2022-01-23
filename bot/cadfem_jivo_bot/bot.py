@@ -27,7 +27,6 @@ class Bot:
         self.process_step()
 
     def process_step(self):
-        print(self.step.client_answer_cases)
         for case in self.step.client_answer_cases:
             case = case(self.message_text)
 
@@ -35,31 +34,31 @@ class Bot:
                 self.chat.step = case['next_step']
                 self.chat.save()
                 self.step = self.steps[self.chat.step](**self.kwargs)
-                self.process_answer(self.step)
+                self.process_answer()
 
                 if case['right_away']:
                     self.process_step()
                 break
 
     # @bot_chat_logging
-    def process_answer(self, step):
+    def process_answer(self):
         payload = {
             'event': "BOT_MESSAGE",
             'id': self.event_id,
             'client_id': self.client_id,
             'message': {
                 'type': "TEXT",
-                'text': step.answer_text,
+                'text': self.step.answer_text,
                 'timestamp': get_timestamp(),
             },
         }
 
-        if step.send_buttons:
+        if self.step.send_buttons:
             payload['message']['type'] = 'BUTTONS'
             payload['message']['title'] = payload['message'].pop('text')
             payload['message']['buttons'] = []
 
-            for button_text in step.buttons:
+            for button_text in self.step.buttons:
                 payload['message']['buttons'].append({'text': button_text})
 
         self.send_message(payload)
