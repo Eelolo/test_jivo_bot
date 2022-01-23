@@ -34,7 +34,7 @@ def bot_chat_logging(func):
 
         chat, chat_client = get_or_create_instances(bot.chat_id, bot.client_id)
         Message.objects.create(
-            client_id=chat_client, chat_id=chat.pk, text=kwargs['message'], bot=True
+            client_id=chat_client, chat_id=chat.pk, text=bot.message_text, bot=True
         )
 
     return wrapper
