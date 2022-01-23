@@ -26,7 +26,8 @@ class Bot:
 
         self.process_step()
 
-    def client_chat_logging(self, func):
+    def client_chat_logging(*args):
+        print(args)
         def wrapper(bot):
             func(bot)
             Message.objects.create(
