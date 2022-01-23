@@ -1,3 +1,17 @@
+# STEPS = {
+#     0: {
+#         'bot_answer_type': 'TEXT',
+#         'bot_answer_text': '',
+#         'client_answer_cases': [{
+#             'func_with_condition': lambda string: True,
+#             'client_answer': '',
+#             'next_step': 1,
+#             'next_step_without_client_answer': False,
+#             'run_function': ''
+#         }],
+#     },
+#
+# }
 from bot.cadfem_jivo_bot.steps import Step
 from bot.utils import (
     get_directions, get_branches_of_application, add_to_selected_categories,
@@ -11,10 +25,16 @@ class OfferToHelpStep(Step):
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
 
-        self.add_client_answer_case(self.run_anyway)
+        self.add_client_answer_case(self.accept)
+        self.add_client_answer_case(self.decline)
 
-    def run_anyway(self, string):
-        return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
+    def accept(self, string):
+        if string == 'да':
+            return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
+
+    def decline(self, string):
+        if string == 'нет':
+            return {'next_step': 'PartingStep', 'right_away': True}
 
 
 class PartingStep(Step):
@@ -32,32 +52,32 @@ class OfferToChooseDirectionStep(Step):
         self.set_answer_text('Выберите направление продукта, которое вас интересует:')
         self.set_send_buttons(True)
 
-        self.set_buttons(get_directions(**kwargs))
+        self.directions = get_directions(**kwargs)
+        self.set_buttons(self.directions)
+
+        self.add_client_answer_case(self.selected_in_product_directions)
+
+    def selected_in_product_directions(self, string):
+        if string in self.directions:
+            add_to_selected_categories(**self.kwargs)
+            return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
+
+
+class OfferToChooseMoreDirectionsStep(Step):
+    def __init__(self, **kwargs):
+        self.set_answer_text('Хотите выбрать еще одно направление?')
+        self.set_send_buttons(True)
+        self.set_buttons(['да', 'нет'])
 
         self.add_client_answer_case(self.accept)
         self.add_client_answer_case(self.decline)
 
     def accept(self, string):
         if string == 'да':
-            return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
+            return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
 
     def decline(self, string):
         if string == 'нет':
-            return {'next_step': 'PartingStep', 'right_away': True, 'silent': True}
-
-
-class OfferToChooseMoreDirectionsStep(Step):
-    def __init__(self, **kwargs):
-        self.kwargs = kwargs
-        self.set_answer_text('Хотите выбрать еще одно направление?')
-        self.set_send_buttons(True)
-        self.set_buttons(['да', 'нет'])
-
-        self.add_client_answer_case(self.selected_in_product_directions)
-
-    def selected_in_product_directions(self, string):
-        if string in get_directions(**self.kwargs):
-            add_to_selected_categories(**self.kwargs)
             return {'next_step': 'OfferToChooseBranchOfApplicationStep', 'right_away': False}
 
 
@@ -67,38 +87,22 @@ class OfferToChooseBranchOfApplicationStep(Step):
         self.set_answer_text('Выберите отрасль применения продукта, которая вас интересует:')
         self.set_send_buttons(True)
 
-        self.set_buttons(get_branches_of_application(**kwargs))
+        self.get_branches_of_application = get_branches_of_application(**kwargs)
+        self.set_buttons(self.get_branches_of_application)
 
-        self.add_client_answer_case(self.accept)
-        self.add_client_answer_case(self.decline)
+        self.add_client_answer_case(self.selected_in_product_branches_of_application)
 
-    def accept(self, string):
-        if string == 'да':
-            return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
-
-    def decline(self, string):
-        if string == 'нет':
+    def selected_in_product_branches_of_application(self, string):
+        if string in self.get_branches_of_application:
+            add_to_selected_categories(**self.kwargs)
             return {'next_step': 'OfferToChooseMoreBranchesOfApplicationStep', 'right_away': False}
 
 
 class OfferToChooseMoreBranchesOfApplicationStep(Step):
     def __init__(self, **kwargs):
-        self.kwargs = kwargs
         self.set_answer_text('Хотите выбрать еще одну отрасль применения?')
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
-
-        self.add_client_answer_case(self.selected_in_product_branches_of_application)
-
-    def selected_in_product_branches_of_application(self, string):
-        if string in get_branches_of_application(**self.kwargs):
-            add_to_selected_categories(**self.kwargs)
-            return {'next_step': 'OfferToChooseMoreBranchesOfApplicationStep', 'right_away': False}
-
-
-class SendingProductsStep(Step):
-    def __init__(self, **kwargs):
-        self.set_answer_text(get_products_from_categories_text(**kwargs))
 
         self.add_client_answer_case(self.accept)
         self.add_client_answer_case(self.decline)
@@ -112,21 +116,20 @@ class SendingProductsStep(Step):
             return {'next_step': 'SendingProductsStep', 'right_away': False}
 
 
-class OfferToFindRelatedCoursesStep(Step):
+class SendingProductsStep(Step):
     def __init__(self, **kwargs):
-        self.set_answer_text('Хотите посмотреть учебные курсы по найденным продуктам?')
-        self.set_send_buttons(True)
-        self.set_buttons(['да', 'нет'])
-
+        self.set_answer_text(get_products_from_categories_text(**kwargs))
         self.add_client_answer_case(self.run_anyway)
 
     def run_anyway(self, string):
         return {'next_step': 'OfferToFindRelatedCoursesStep', 'right_away': True}
 
 
-class SendingCoursesStep(Step):
+class OfferToFindRelatedCoursesStep(Step):
     def __init__(self, **kwargs):
-        self.set_answer_text(get_related_courses(**kwargs))
+        self.set_answer_text('Хотите посмотреть учебные курсы по найденным продуктам?')
+        self.set_send_buttons(True)
+        self.set_buttons(['да', 'нет'])
 
         self.add_client_answer_case(self.accept)
         self.add_client_answer_case(self.decline)
@@ -138,3 +141,12 @@ class SendingCoursesStep(Step):
     def decline(self, string):
         if string == 'нет':
             return {'next_step': 'PartingStep', 'right_away': False}
+
+
+class SendingCoursesStep(Step):
+    def __init__(self, **kwargs):
+        self.set_answer_text(get_related_courses(**kwargs))
+        self.add_client_answer_case(self.run_anyway)
+
+    def run_anyway(self, string):
+        return {'next_step': 'PartingStep', 'right_away': True}
