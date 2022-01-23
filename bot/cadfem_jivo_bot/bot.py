@@ -30,8 +30,6 @@ class Bot:
             if case:
                 self.chat.step = case['next_step']
                 self.chat.save()
-                if not case['right_away']:
-                    self.process_step()
                 break
 
     # @bot_chat_logging
