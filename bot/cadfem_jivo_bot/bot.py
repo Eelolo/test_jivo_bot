@@ -22,16 +22,17 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
-        print(self.chat.step)
+
         for case in step.client_answer_cases:
             case = case(self.message_text)
 
             if case:
                 self.chat.step = case['next_step']
                 self.chat.save()
+                print(self.chat.step)
                 if not case.get('silent', False):
                     self.process_answer(step)
-                print(case['right_away'])
+
                 if case['right_away']:
                     self.process_step()
                 break
