@@ -22,9 +22,8 @@ class Bot:
 
     def process_step(self, right_away=False):
         step = self.steps[self.chat.step](**self.kwargs)
-        if right_away:
-            self.chat.step_in_process = True
-            self.chat.save()
+        print(self.chat.step)
+        print(right_away)
 
         if not self.chat.step_in_process:
             self.process_answer(step)
