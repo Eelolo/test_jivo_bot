@@ -136,7 +136,10 @@ def get_related_courses(**kwargs):
             data = deserialize_data(requests.get(url).content).get('results', [])
             titles = [result['short_title'] for result in data]
             courses.extend(titles)
+
         courses = '\n\n'.join(courses)
 
     if not products or not courses:
         return 'По выбранным категориям учебных курсов не найдено.'
+    else:
+        return courses
