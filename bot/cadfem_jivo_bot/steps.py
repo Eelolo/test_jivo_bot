@@ -6,6 +6,8 @@ class Step:
 
     def __new__(cls, *args, **kwargs):
         cls.__client_answer_cases = []
+        print(f'args {args}')
+        print(f'kwargs {kwargs}')
         return super().__new__(cls, *args, **kwargs)
 
     def set_answer_text(self, text):
