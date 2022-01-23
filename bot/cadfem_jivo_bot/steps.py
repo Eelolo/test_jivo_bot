@@ -6,9 +6,9 @@ class Step:
 
     def __new__(cls, *args, **kwargs):
         cls.__client_answer_cases = []
-        print(f'args {args}')
-        print(f'kwargs {kwargs}')
-        return super().__new__(cls, *args, **kwargs)
+        init_kwargs = kwargs
+        kwargs = {}
+        return super().__new__(cls, *args, **kwargs, **init_kwargs)
 
     def set_answer_text(self, text):
         if isinstance(text, str):
