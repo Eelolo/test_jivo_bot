@@ -2,6 +2,7 @@ from django.views.generic.base import View
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from bot.cadfem_jivo_bot.bot import Bot
 from .utils import deserialize_data
@@ -13,7 +14,7 @@ class IndexPageView(View):
         return render(request, "index.html")
 
 
-@csrf_exempt
+@method_decorator((csrf_exempt,), name='dispatch')
 class DataFromJivoView(View):
     http_method_names = ['post']
 
