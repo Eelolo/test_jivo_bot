@@ -74,7 +74,7 @@ class OfferToChooseBranchOfApplicationStep(Step):
 
     def accept(self, string):
         if string == 'да':
-            return {'next_step': 'OfferToChooseMoreBranchesOfApplicationStep', 'right_away': False}
+            return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
 
     def decline(self, string):
         if string == 'нет':
