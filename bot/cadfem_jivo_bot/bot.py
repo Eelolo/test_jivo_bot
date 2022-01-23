@@ -37,7 +37,8 @@ class Bot:
 
         return wrapper
 
-    def bot_chat_logging(self, func):
+    def bot_chat_logging(*args):
+        print(args)
         def wrapper(bot):
             func(bot)
             Message.objects.create(
