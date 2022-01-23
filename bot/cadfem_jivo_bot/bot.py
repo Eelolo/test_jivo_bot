@@ -23,7 +23,7 @@ class Bot:
     def set_chat_step(self, step):
         self.chat.step = step
         self.chat.save()
-        self.chat = Chat.objects.get(chat_id=self.chat_id)
+        # self.chat = Chat.objects.get(chat_id=self.chat_id)
 
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
@@ -31,10 +31,7 @@ class Bot:
             case = case(self.message_text)
 
             if case:
-                print(f'old {self.chat.step}')
-                print(case['right_away'])
                 self.set_chat_step(case['next_step'])
-                print(f'new {self.chat.step}')
                 step = self.steps[self.chat.step](**self.kwargs)
                 self.process_answer(step)
                 if case['right_away']:
