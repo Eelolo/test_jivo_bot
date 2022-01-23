@@ -23,7 +23,6 @@ class Bot:
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
         print(self.chat.step)
-        print(self.chat.step_in_process)
         if not self.chat.step_in_process:
             self.process_answer(step)
             self.chat.step_in_process = True
@@ -37,6 +36,7 @@ class Bot:
                     self.chat.save()
                     step = self.steps[self.chat.step](**self.kwargs)
                     self.process_answer(step)
+                    print(case['right_away'])
                     if case['right_away']:
                         self.process_step()
                     break
