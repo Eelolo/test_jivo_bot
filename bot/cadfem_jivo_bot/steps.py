@@ -8,7 +8,7 @@ class Step:
         cls.__client_answer_cases = []
         init_kwargs = kwargs
         kwargs = {}
-        return super().__new__(cls, *args, **kwargs, **init_kwargs)
+        return super(Step, cls).__new__(cls)
 
     def set_answer_text(self, text):
         if isinstance(text, str):
