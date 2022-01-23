@@ -1,8 +1,8 @@
 from bot.utils import get_or_create_instances
-from bot.old_steps import STEPS
-from bot.utils import bot_chat_logging, get_timestamp
+from bot.utils import get_timestamp
+from bot.models import Message
+
 import requests
-from bot.models import Chat
 
 
 class Bot:
@@ -26,6 +26,29 @@ class Bot:
 
         self.process_step()
 
+    @staticmethod
+    def client_chat_logging(func):
+        def wrapper(bot):
+            func(bot)
+            Message.objects.create(
+                client_id=bot.chat_client, chat_id=bot.chat.pk,
+                text=bot.message_text, bot=False
+            )
+
+        return wrapper
+
+    @staticmethod
+    def bot_chat_logging(func):
+        def wrapper(bot):
+            func(bot)
+            Message.objects.create(
+                client_id=bot.chat_client, chat_id=bot.chat.pk,
+                text=bot.message_text, bot=True
+            )
+
+        return wrapper
+
+    @client_chat_logging
     def process_step(self):
         for case in self.step.client_answer_cases:
             case = case(self.message_text)
