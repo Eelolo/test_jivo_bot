@@ -20,7 +20,7 @@ class OfferToHelpStep(Step):
 
     def decline(self, string):
         if string == 'нет':
-            return {'next_step': 'PartingStep', 'right_away': True}
+            return {'next_step': 'PartingStep', 'right_away': False}
 
 
 class PartingStep(Step):
