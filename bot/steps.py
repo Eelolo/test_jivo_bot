@@ -44,6 +44,7 @@ class OfferToChooseDirectionStep(Step):
         if string == 'нет':
             return {'next_step': 'PartingStep', 'right_away': False}
 
+
 class OfferToChooseMoreDirectionsStep(Step):
     def __init__(self, **kwargs):
         self.kwargs = kwargs
