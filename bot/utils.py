@@ -128,14 +128,15 @@ def get_category_id_from_title(title):
 def get_related_courses(**kwargs):
     products = get_products_from_categories(get_selected_categories(kwargs['chat_id']))
     from random import randint
+    courses = []
     if products:
-        courses = []
         for idx in range(randint(0, len(products)), randint(0, len(products)), randint(0, len(products))):
             url = f'https://static.my.cadfem-cis.ru/api/shop/containers/{idx}/learning-course/' \
                   '?limit=3&fields[]=id&fields[]=short_title&f'
-            data = deserialize_data(requests.get(url).content)['results']
+            data = deserialize_data(requests.get(url).content).get('results', [])
             titles = [result['short_title'] for result in data]
             courses.extend(titles)
-        return '\n\n'.join(courses)
-    else:
+        courses = '\n\n'.join(courses)
+
+    if not products or not courses:
         return 'По выбранным категориям учебных курсов не найдено.'
