@@ -11,6 +11,8 @@ class OfferToHelpStep(Step):
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
 
+        self.add_client_answer_case(self.run_anyway)
+
     def run_anyway(self, string):
         return {'next_step': 'OfferToChooseDirectionStep', 'right_away': True}
 
