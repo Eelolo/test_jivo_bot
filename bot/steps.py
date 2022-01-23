@@ -11,10 +11,13 @@ class OfferToHelpStep(Step):
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
 
-        self.add_client_answer_case(self.run_anyway)
+        self.add_client_answer_case(self.decline)
 
-    def run_anyway(self, string):
-        return {'next_step': 'OfferToChooseDirectionStep', 'right_away': True}
+    def decline(self, string):
+        if string == 'нет':
+            return {'next_step': 'PartingStep', 'right_away': False}
+        else:
+            return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
 
 
 class PartingStep(Step):
@@ -35,15 +38,10 @@ class OfferToChooseDirectionStep(Step):
         self.set_buttons(get_directions(**kwargs))
 
         self.add_client_answer_case(self.accept)
-        self.add_client_answer_case(self.decline)
 
     def accept(self, string):
         if string == 'да':
             return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
-
-    def decline(self, string):
-        if string == 'нет':
-            return {'next_step': 'PartingStep', 'right_away': False}
 
 
 class OfferToChooseMoreDirectionsStep(Step):
