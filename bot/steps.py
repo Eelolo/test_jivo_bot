@@ -1,17 +1,3 @@
-# STEPS = {
-#     0: {
-#         'bot_answer_type': 'TEXT',
-#         'bot_answer_text': '',
-#         'client_answer_cases': [{
-#             'func_with_condition': lambda string: True,
-#             'client_answer': '',
-#             'next_step': 1,
-#             'next_step_without_client_answer': False,
-#             'run_function': ''
-#         }],
-#     },
-#
-# }
 from bot.cadfem_jivo_bot.steps import Step
 from bot.utils import (
     get_directions, get_branches_of_application, add_to_selected_categories,
