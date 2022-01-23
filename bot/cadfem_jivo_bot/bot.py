@@ -28,10 +28,9 @@ class Bot:
 
     def client_chat_logging(*args):
         def wrapper(bot):
-            print(bot)
             args[0](bot)
             Message.objects.create(
-                client_id=bot.chat_client, chat_id=bot.chat.pk,
+                client_id=bot.client, chat_id=bot.chat.pk,
                 text=bot.message_text, bot=False
             )
 
@@ -41,7 +40,7 @@ class Bot:
         def wrapper(bot):
             args[0](bot)
             Message.objects.create(
-                client_id=bot.chat_client, chat_id=bot.chat.pk,
+                client_id=bot.client, chat_id=bot.chat.pk,
                 text=bot.message_text, bot=True
             )
 
