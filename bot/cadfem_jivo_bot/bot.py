@@ -30,9 +30,7 @@ class Bot:
                 self.chat.step = case['next_step']
                 self.chat.save()
 
-                print(self.chat.step)
-                if not case.get('silent', False):
-                    self.process_answer(step)
+                self.process_answer(step)
 
                 if case['right_away']:
                     self.process_step()
