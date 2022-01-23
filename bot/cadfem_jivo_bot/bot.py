@@ -31,6 +31,8 @@ class Bot:
                 self.chat.save()
                 if not case.get('silent', False):
                     self.process_answer(step)
+                if case['right_away']:
+                    self.process_step()
                 break
 
     # @bot_chat_logging
