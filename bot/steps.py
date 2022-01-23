@@ -99,7 +99,7 @@ class OfferToChooseMoreBranchesOfApplicationStep(Step):
 
     def decline(self, string):
         if string == 'нет':
-            return {'next_step': 'SendingProductsStep', 'right_away': False}
+            return {'next_step': 'SendingProductsStep', 'right_away': True}
 
 
 class SendingProductsStep(Step):
@@ -108,7 +108,7 @@ class SendingProductsStep(Step):
         self.add_client_answer_case(self.run_anyway)
 
     def run_anyway(self, string):
-        return {'next_step': 'OfferToFindRelatedCoursesStep', 'right_away': True}
+        return {'next_step': 'OfferToFindRelatedCoursesStep', 'right_away': False}
 
 
 class OfferToFindRelatedCoursesStep(Step):
@@ -122,7 +122,7 @@ class OfferToFindRelatedCoursesStep(Step):
 
     def accept(self, string):
         if string == 'да':
-            return {'next_step': 'SendingCoursesStep', 'right_away': False}
+            return {'next_step': 'SendingCoursesStep', 'right_away': True}
 
     def decline(self, string):
         if string == 'нет':
@@ -135,4 +135,4 @@ class SendingCoursesStep(Step):
         self.add_client_answer_case(self.run_anyway)
 
     def run_anyway(self, string):
-        return {'next_step': 'PartingStep', 'right_away': True}
+        return {'next_step': 'PartingStep', 'right_away': False}
