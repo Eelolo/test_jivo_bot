@@ -27,19 +27,15 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step]()
-        # print(self.chat.step)
-        # print(step.client_answer_cases)
         for case in step.client_answer_cases:
-            # print(case)
             case = case(self.message_text)
 
             if case:
                 self.set_chat_step(case['next_step'])
-                # print(step.client_answer_cases)
-                # step = self.steps[self.chat.step](**self.kwargs)
-                # self.process_answer(step)
-                # if case['right_away']:
-                #     self.process_step()
+                step = self.steps[self.chat.step](**self.kwargs)
+                self.process_answer(step)
+                if case['right_away']:
+                    self.process_step()
                 break
 
     # @bot_chat_logging
