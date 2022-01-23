@@ -21,7 +21,6 @@ from bot.utils import (
 
 class OfferToHelpStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.set_answer_text('Здравствуйте! Позвольте помочь вам определиться с выбором продукта.')
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
@@ -40,7 +39,6 @@ class OfferToHelpStep(Step):
 
 class PartingStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.set_answer_text('Всего доброго! Я подожду здесь. Всегда буду рад помочь.')
         self.add_client_answer_case(self.run_anyway)
 
@@ -50,7 +48,6 @@ class PartingStep(Step):
 
 class OfferToChooseDirectionStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.kwargs = kwargs
         self.set_answer_text('Выберите направление продукта, которое вас интересует:')
         self.set_send_buttons(True)
@@ -68,7 +65,6 @@ class OfferToChooseDirectionStep(Step):
 
 class OfferToChooseMoreDirectionsStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.set_answer_text('Хотите выбрать еще одно направление?')
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
@@ -87,7 +83,6 @@ class OfferToChooseMoreDirectionsStep(Step):
 
 class OfferToChooseBranchOfApplicationStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.kwargs = kwargs
         self.set_answer_text('Выберите отрасль применения продукта, которая вас интересует:')
         self.set_send_buttons(True)
@@ -105,7 +100,6 @@ class OfferToChooseBranchOfApplicationStep(Step):
 
 class OfferToChooseMoreBranchesOfApplicationStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.set_answer_text('Хотите выбрать еще одну отрасль применения?')
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
@@ -124,7 +118,6 @@ class OfferToChooseMoreBranchesOfApplicationStep(Step):
 
 class SendingProductsStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.set_answer_text(get_products_from_categories_text(**kwargs))
         self.add_client_answer_case(self.run_anyway)
 
@@ -134,7 +127,6 @@ class SendingProductsStep(Step):
 
 class OfferToFindRelatedCoursesStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.set_answer_text('Хотите посмотреть учебные курсы по найденным продуктам?')
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
@@ -153,7 +145,6 @@ class OfferToFindRelatedCoursesStep(Step):
 
 class SendingCoursesStep(Step):
     def __init__(self, **kwargs):
-        super().__init__()
         self.set_answer_text(get_related_courses(**kwargs))
         self.add_client_answer_case(self.run_anyway)
 
