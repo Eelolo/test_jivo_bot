@@ -15,14 +15,15 @@ class Bot:
         if not self.chat.step:
             self.chat.step = first_step
             self.chat.save()
-        self.steps = steps
-        self.step = self.steps[self.chat.step](**self.kwargs)
         self.kwargs = {
             'event_id': self.event_id,
             'chat_id': self.chat_id,
             'client_id': self.client_id,
             'message_text': self.message_text,
         }
+        self.steps = steps
+        self.step = self.steps[self.chat.step](**self.kwargs)
+
         self.process_step()
 
     def process_step(self):
