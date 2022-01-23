@@ -34,9 +34,9 @@ class Bot:
 
                 if case:
                     self.chat.step = case['next_step']
+                    self.chat.step_in_process = False
                     self.chat.save()
-                    step = self.steps[self.chat.step](**self.kwargs)
-                    self.process_answer(step)
+                    self.process_step()
                     if case['right_away']:
                         self.process_step()
                     break
