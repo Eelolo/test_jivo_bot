@@ -59,7 +59,6 @@ class OfferToChooseDirectionStep(Step):
 
     def selected_in_product_directions(self, string):
         if string in self.directions:
-            print(self.kwargs)
             add_to_selected_categories(**self.kwargs)
             return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
 
