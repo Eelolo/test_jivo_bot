@@ -22,17 +22,21 @@ class Bot:
 
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
-        print(self.chat.step)
-        for case in step.client_answer_cases:
-            case = case(self.message_text)
 
-            if case:
-                self.process_answer(step)
-                self.chat.step = case['next_step']
-                self.chat.save()
-                if case['right_away']:
-                    self.process_step()
-                break
+        if not self.chat.step_in_process:
+            self.process_answer(step)
+            self.chat.step_in_process = True
+            self.chat.save()
+        else:
+            for case in step.client_answer_cases:
+                case = case(self.message_text)
+
+                if case:
+                    self.chat.step = case['next_step']
+                    self.chat.save()
+                    if case['right_away']:
+                        self.process_step()
+                    break
 
     # @bot_chat_logging
     def process_answer(self, step):
