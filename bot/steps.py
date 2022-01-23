@@ -35,6 +35,7 @@ class OfferToChooseDirectionStep(Step):
         self.set_buttons(get_directions(**kwargs))
 
         self.add_client_answer_case(self.accept)
+        self.add_client_answer_case(self.decline)
 
     def accept(self, string):
         if string == 'да':
