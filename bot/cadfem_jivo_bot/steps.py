@@ -4,6 +4,9 @@ class Step:
     __buttons = []
     __client_answer_cases = []
 
+    def __init__(self):
+        self.__client_answer_cases = []
+
     def set_answer_text(self, text):
         if isinstance(text, str):
             self.__answer_text = text
