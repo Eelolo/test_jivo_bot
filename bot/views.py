@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .utils import client_chat_logging, deserialize_data
 from bot.cadfem_jivo_bot.bot import Bot
-from .old_oop_steps import *
+from .steps import *
 
 
 class IndexPageView(View):
