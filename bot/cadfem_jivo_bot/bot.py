@@ -36,6 +36,8 @@ class Bot:
                     self.chat.step = case['next_step']
                     self.chat.step_in_process = False
                     self.chat.save()
+                    print(self.chat.step)
+                    print(self.chat.step_in_process)
                     # self.process_step()
                     if case['right_away']:
                         self.process_step()
