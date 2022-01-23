@@ -1,13 +1,3 @@
-# 'greetings': 'Здраствуйте!',
-# 'offer_to_help': 'Позвольте помочь вам определиться с выбором продукта.',
-# 'parting': 'Всего доброго! Я подожду здесь. Всегда буду рад помочь.',
-# 'offer_to_choose_direction': 'Выберите направление продукта, которое вас интересуют:',
-# 'offer_to_choose_more_directions': 'Хотите выбрать еще одно направление?',
-# 'offer_to_choose_branch_of_application': 'Выберите отрасль применения продукта, которая вас интересуют:',
-# 'offer_to_choose_more_branches_of_application': 'Хотите выбрать еще одну отрасль применения?',
-# 'sending_products': 'Продукты подходящие к выбранным категориям:\n',
-# 'offer_to_find_related_courses': 'Хотите посмотреть учебные курсы по найденным продуктам?',
-# 'sending_courses': 'Курсы по найденным продуктам:\n',
 import bot.utils as utils
 
 
