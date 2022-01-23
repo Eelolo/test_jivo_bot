@@ -16,6 +16,7 @@ class Bot:
             self.chat.step = first_step
             self.chat.save()
         self.steps = steps
+        self.step = self.steps[self.chat.step](**self.kwargs)
         self.kwargs = {
             'event_id': self.event_id,
             'chat_id': self.chat_id,
@@ -25,14 +26,14 @@ class Bot:
         self.process_step()
 
     def process_step(self):
-        step = self.steps[self.chat.step](**self.kwargs)
-        for case in step.client_answer_cases:
+        for case in self.step.client_answer_cases:
             case = case(self.message_text)
 
             if case:
                 self.chat.step = case['next_step']
                 self.chat.save()
-                self.process_answer(step)
+                self.step = self.steps[self.chat.step](**self.kwargs)
+                self.process_answer(self.step)
 
                 if case['right_away']:
                     self.process_step()
