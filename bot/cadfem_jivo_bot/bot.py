@@ -20,7 +20,7 @@ class Bot:
         }
         self.process_step()
 
-    def process_step(self):
+    def process_step(self, right_away=False):
         step = self.steps[self.chat.step](**self.kwargs)
         print(self.chat.step)
         if not self.chat.step_in_process:
@@ -35,10 +35,8 @@ class Bot:
                     self.chat.step = case['next_step']
                     self.chat.step_in_process = False
                     self.chat.save()
-                    self.process_step()
                     print(case['right_away'])
-                    if case['right_away']:
-                        self.process_step()
+                    self.process_step(case['right_away'])
                     break
 
     # @bot_chat_logging
