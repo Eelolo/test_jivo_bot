@@ -20,33 +20,21 @@ class Bot:
         }
         self.process_step()
 
-    def set_chat_step(self, step):
-        self.chat.step = step
-        self.chat.save()
-        # self.chat = Chat.objects.get(chat_id=self.chat_id)
-
     def process_step(self):
         step = self.steps[self.chat.step](**self.kwargs)
         for case in step.client_answer_cases:
             case = case(self.message_text)
 
             if case:
-                self.set_chat_step(case['next_step'])
-                step = self.steps[self.chat.step](**self.kwargs)
                 self.process_answer(step)
+                self.chat.step = case['next_step']
+                self.chat.save()
                 if case['right_away']:
                     self.process_step()
                 break
 
     # @bot_chat_logging
     def process_answer(self, step):
-        if step.send_buttons:
-            self.send_buttons_message(step)
-        else:
-            self.send_text_message(step)
-
-    # @bot_chat_logging
-    def send_text_message(self, step):
         payload = {
             'event': "BOT_MESSAGE",
             'id': self.event_id,
@@ -58,28 +46,17 @@ class Bot:
             },
         }
 
-        requests.post(
-            'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
-            json=payload
-        )
+        if step.send_buttons:
+            payload['message']['type'] = 'BUTTONS'
+            payload['message']['title'] = payload['message'].pop('text')
+            payload['message']['buttons'] = []
 
-    # @bot_chat_logging
-    def send_buttons_message(self, step):
-        payload = {
-            'event': "BOT_MESSAGE",
-            'id': self.event_id,
-            'client_id': self.client_id,
-            'message': {
-                'type': "BUTTONS",
-                'title': step.answer_text,
-                'buttons': [],
-                'timestamp': get_timestamp(),
-            },
-        }
+            for button_text in step.buttons:
+                payload['message']['buttons'].append({'text': button_text})
 
-        for button_text in step.buttons:
-            payload['message']['buttons'].append({'text': button_text})
+        self.send_message(payload)
 
+    def send_message(self, payload):
         requests.post(
             'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
             json=payload
