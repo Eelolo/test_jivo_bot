@@ -40,6 +40,9 @@ class OfferToChooseDirectionStep(Step):
         if string == 'да':
             return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
 
+    def decline(self, string):
+        if string == 'нет':
+            return {'next_step': 'PartingStep', 'right_away': False}
 
 class OfferToChooseMoreDirectionsStep(Step):
     def __init__(self, **kwargs):
