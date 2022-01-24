@@ -1,6 +1,6 @@
 from bot.utils import get_or_create_instances
 from bot.old_steps import STEPS
-from .utils import bot_chat_logging, get_timestamp
+from .utils import get_timestamp
 import requests
 import bot.utils as utils
 
@@ -14,8 +14,6 @@ class Bot:
         self.chat, self.client = get_or_create_instances(self.chat_id, self.client_id)
 
         self.process_step()
-        # not_understand_message(id, client_id, utime, chat)
-        # invite_step(id, client_id, chat_id, utime, chat)
 
     def process_step(self):
         step = STEPS[self.chat.status]
@@ -25,13 +23,10 @@ class Bot:
                 self.chat.status = case['next_step']
                 self.chat.save()
                 self.process_answer(self.chat.status, case)
-                # if STEPS[self.chat.status]['client_answer_cases'][idx]['next_step_without_client_answer']:
-                #     self.process_step()
                 if STEPS[case['next_step']]['client_answer_cases'][0]['next_step_without_client_answer']:
                     self.process_step()
                 break
 
-    # @bot_chat_logging
     def process_answer(self, step, case):
         if case['run_function']:
             getattr(utils, case['run_function'])(
@@ -47,7 +42,6 @@ class Bot:
         else:
             self.send_text_message(step, case)
 
-    # @bot_chat_logging
     def send_text_message(self, step, case):
         payload = {
             'event': "BOT_MESSAGE",
@@ -74,7 +68,6 @@ class Bot:
             json=payload
         )
 
-    # @bot_chat_logging
     def send_buttons_message(self, step, case):
         payload = {
             'event': "BOT_MESSAGE",

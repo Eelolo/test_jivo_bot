@@ -10,17 +10,24 @@ class Bot:
         self.event_id = data.get('id', False)
         self.client_id = data.get('client_id', False)
         self.chat_id = data.get('chat_id', False)
-        self.message_text = data['message']['text'] if data.get('message', False) and data['message'].get('text', False) else ''
+
+        if data.get('message', False) and data['message'].get('text', False):
+            self.message_text = data['message']['text']
+        else:
+            self.message_text = ''
+
         self.chat, self.client = get_or_create_instances(self.chat_id, self.client_id)
         if not self.chat.step:
             self.chat.step = first_step
             self.chat.save()
+
         self.kwargs = {
             'event_id': self.event_id,
             'chat_id': self.chat_id,
             'client_id': self.client_id,
             'message_text': self.message_text,
         }
+
         self.steps = steps
         self.step = self.steps[self.chat.step](**self.kwargs)
 

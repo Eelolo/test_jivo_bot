@@ -19,7 +19,7 @@ class DataFromJivoView(View):
     http_method_names = ['post']
 
     def get(self, request):
-        return JsonResponse({'message': 'Bot sends POST requests here'})
+        return JsonResponse({'message': 'Bot receive POST requests here'})
 
     def post(self, request):
         data = deserialize_data(request.body)
