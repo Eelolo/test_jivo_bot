@@ -53,7 +53,7 @@ def get_or_create_instances(chat_id, client_id):
 
 
 def get_directions(**kwargs):
-    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/?limit=5'
+    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/'
     data = deserialize_data(requests.get(url).content)
 
     directions = []
@@ -64,7 +64,7 @@ def get_directions(**kwargs):
 
 
 def get_branches_of_application(**kwargs):
-    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/?limit=5'
+    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/'
     data = deserialize_data(requests.get(url).content)
 
     branches_of_application = []
