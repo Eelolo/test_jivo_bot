@@ -141,7 +141,7 @@ class OfferToChooseBranchOfApplicationStep(Step):
     def selected_in_product_branches_of_application(self, string):
         if string in self.get_branches_of_application:
             add_to_selected_categories(**self.kwargs)
-            return {'next_step': 'SendingProductsStep', 'right_away': False}
+            return {'next_step': 'SendingProductsStep', 'right_away': True}
 
     def select_other_category(self, string):
         if string == 'Выбрать другую отрасль применения':
@@ -163,7 +163,7 @@ class ChooseOtherBranchOfApplicationStep(Step):
     def selected_in_product_branches_of_application(self, string):
         if string in self.get_branches_of_application:
             add_to_selected_categories(**self.kwargs)
-            return {'next_step': 'SendingProductsStep', 'right_away': False}
+            return {'next_step': 'SendingProductsStep', 'right_away': True}
 
     def select_featured_category(self, string):
         if string == 'Вернуться к основным областям применения':
