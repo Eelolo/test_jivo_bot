@@ -57,7 +57,7 @@ class SpecifyNameStep(Step):
         self.set_answer_text('Напишите как к вам можно будет обратиться.')
         self.add_client_answer_case(self.run_anyway)
 
-    def run_anyway(self):
+    def run_anyway(self, string):
         save_client_name(**self.kwargs)
         return {'next_step': 'SpecifyPhoneStep', 'right_away': False}
 
@@ -68,7 +68,7 @@ class SpecifyPhoneStep(Step):
         self.set_answer_text('Укажите ваш номер телефона.')
         self.add_client_answer_case(self.run_anyway)
 
-    def run_anyway(self):
+    def run_anyway(self, string):
         save_client_phone(**self.kwargs)
         return {'next_step': 'AcceptSpecifyingContactsStep', 'right_away': True}
 
@@ -78,7 +78,7 @@ class AcceptSpecifyingContactsStep(Step):
         self.set_answer_text('Спасибо, теперь мы точно сможем вам помочь, в случае возникновения проблем.')
         self.add_client_answer_case(self.run_anyway)
 
-    def run_anyway(self):
+    def run_anyway(self, string):
         return {'next_step': 'OfferToChooseDirectionStep', 'right_away': True}
 
 
