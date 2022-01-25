@@ -89,7 +89,7 @@ class OfferToChooseDirectionStep(Step):
         self.set_send_buttons(True)
 
         self.directions = get_directions(**kwargs)
-        self.set_buttons(self.directions)
+        self.set_buttons(self.directions + ['Выбрать другое направление'])
 
         self.add_client_answer_case(self.selected_in_product_directions)
         self.add_client_answer_case(self.select_other_category)
@@ -111,7 +111,7 @@ class ChooseOtherDirectionsStep(Step):
         self.set_send_buttons(True)
 
         self.directions = get_directions(**kwargs)
-        self.set_buttons(self.directions)
+        self.set_buttons(self.directions + ['Вернуться к основным направлениям'])
 
         self.add_client_answer_case(self.selected_in_product_directions)
         self.add_client_answer_case(self.select_featured_category)
@@ -133,7 +133,7 @@ class OfferToChooseBranchOfApplicationStep(Step):
         self.set_send_buttons(True)
 
         self.get_branches_of_application = get_branches_of_application(**kwargs)
-        self.set_buttons(self.get_branches_of_application)
+        self.set_buttons(self.get_branches_of_application + ['Выбрать другую отрасль применения'])
 
         self.add_client_answer_case(self.selected_in_product_branches_of_application)
         self.add_client_answer_case(self.select_other_category)
@@ -155,7 +155,7 @@ class ChooseOtherBranchOfApplicationStep(Step):
         self.set_send_buttons(True)
 
         self.get_branches_of_application = get_branches_of_application(**kwargs)
-        self.set_buttons(self.get_branches_of_application)
+        self.set_buttons(self.get_branches_of_application + ['Вернуться к основным областям применения'])
 
         self.add_client_answer_case(self.selected_in_product_branches_of_application)
         self.add_client_answer_case(self.select_featured_category)
