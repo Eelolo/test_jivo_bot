@@ -37,9 +37,9 @@ class DataFromJivoView(View):
             'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep,
         }
 
-        try:
-            Bot(data, first_step='PartingStep', steps=steps)
-        except:
-            return JsonResponse({'message': 'Internal server error'}, status=500)
+        # try:
+        Bot(data, first_step='PartingStep', steps=steps)
+        # except:
+        #     return JsonResponse({'message': 'Internal server error'}, status=500)
 
         return JsonResponse({'message': 'ok'}, status=200)
