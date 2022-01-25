@@ -1,7 +1,8 @@
 from bot.cadfem_jivo_bot.steps import Step
 from bot.utils import (
     get_directions, get_branches_of_application, add_to_selected_categories,
-    get_products_from_categories_text, get_related_courses
+    get_products_from_categories_text, get_related_courses, save_client_name,
+    save_client_phone
 )
 
 
@@ -16,7 +17,7 @@ class OfferToHelpStep(Step):
 
     def accept(self, string):
         if string == 'да':
-            return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
+            return {'next_step': 'OfferToSpecifyContactsStep', 'right_away': False}
 
     def decline(self, string):
         if string == 'нет':
@@ -30,6 +31,55 @@ class PartingStep(Step):
 
     def run_anyway(self, string):
         return {'next_step': 'OfferToHelpStep', 'right_away': False}
+
+
+class OfferToSpecifyContactsStep(Step):
+    def __init__(self, **kwargs):
+        self.set_answer_text('Оставьте нам свои контакты и, при необходимости, мы обязательно вам поможем.')
+        self.set_send_buttons(True)
+        self.set_buttons(['да', 'нет'])
+
+        self.add_client_answer_case(self.accept)
+        self.add_client_answer_case(self.decline)
+
+    def accept(self, string):
+        if string == 'да':
+            return {'next_step': 'SpecifyNameStep', 'right_away': False}
+
+    def decline(self, string):
+        if string == 'нет':
+            return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
+
+
+class SpecifyNameStep(Step):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.set_answer_text('Напишите как к вам можно будет обратиться.')
+        self.add_client_answer_case(self.run_anyway)
+
+    def run_anyway(self):
+        save_client_name(**self.kwargs)
+        return {'next_step': 'SpecifyPhoneStep', 'right_away': False}
+
+
+class SpecifyPhoneStep(Step):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.set_answer_text('Укажите ваш номер телефона.')
+        self.add_client_answer_case(self.run_anyway)
+
+    def run_anyway(self):
+        save_client_phone(**self.kwargs)
+        return {'next_step': 'AcceptSpecifyingContactsStep', 'right_away': True}
+
+
+class AcceptSpecifyingContactsStep(Step):
+    def __init__(self, **kwargs):
+        self.set_answer_text('Спасибо, теперь мы точно сможем вам помочь, в случае возникновения проблем.')
+        self.add_client_answer_case(self.run_anyway)
+
+    def run_anyway(self):
+        return {'next_step': 'OfferToChooseDirectionStep', 'right_away': True}
 
 
 class OfferToChooseDirectionStep(Step):

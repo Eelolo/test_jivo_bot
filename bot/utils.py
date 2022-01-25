@@ -143,3 +143,15 @@ def get_related_courses(**kwargs):
         return 'По выбранным категориям учебных курсов не найдено.'
     else:
         return courses
+
+
+def save_client_name(**kwargs):
+    client = ChatClient.objects.get(client_id=kwargs['client_id'])
+    client.name = kwargs['message_text']
+    client.save()
+
+
+def save_client_phone(**kwargs):
+    client = ChatClient.objects.get(client_id=kwargs['client_id'])
+    client.phone = kwargs['message_text']
+    client.save()

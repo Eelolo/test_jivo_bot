@@ -26,6 +26,9 @@ class DataFromJivoView(View):
 
         steps = {
             'OfferToHelpStep': OfferToHelpStep, 'PartingStep': PartingStep,
+            'OfferToSpecifyContactsStep': OfferToSpecifyContactsStep,
+            'SpecifyNameStep': SpecifyNameStep, 'SpecifyPhoneStep': SpecifyPhoneStep,
+            'AcceptSpecifyingContactsStep': AcceptSpecifyingContactsStep,
             'OfferToChooseDirectionStep': OfferToChooseDirectionStep,
             'OfferToChooseMoreDirectionsStep': OfferToChooseMoreDirectionsStep,
             'OfferToChooseBranchOfApplicationStep': OfferToChooseBranchOfApplicationStep,
