@@ -92,29 +92,38 @@ class OfferToChooseDirectionStep(Step):
         self.set_buttons(self.directions)
 
         self.add_client_answer_case(self.selected_in_product_directions)
+        self.add_client_answer_case(self.select_other_category)
 
     def selected_in_product_directions(self, string):
         if string in self.directions:
             add_to_selected_categories(**self.kwargs)
-            return {'next_step': 'OfferToChooseMoreDirectionsStep', 'right_away': False}
-
-
-class OfferToChooseMoreDirectionsStep(Step):
-    def __init__(self, **kwargs):
-        self.set_answer_text('Хотите выбрать еще одно направление?')
-        self.set_send_buttons(True)
-        self.set_buttons(['да', 'нет'])
-
-        self.add_client_answer_case(self.accept)
-        self.add_client_answer_case(self.decline)
-
-    def accept(self, string):
-        if string == 'да':
-            return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
-
-    def decline(self, string):
-        if string == 'нет':
             return {'next_step': 'OfferToChooseBranchOfApplicationStep', 'right_away': False}
+
+    def select_other_category(self, string):
+        if string == 'Выбрать другое направление':
+            return {'next_step': 'ChooseOtherDirectionsStep', 'right_away': False}
+
+
+class ChooseOtherDirectionsStep(Step):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.set_answer_text('Выберите направление продукта, которое вас интересует:')
+        self.set_send_buttons(True)
+
+        self.directions = get_directions(**kwargs)
+        self.set_buttons(self.directions)
+
+        self.add_client_answer_case(self.selected_in_product_directions)
+        self.add_client_answer_case(self.select_featured_category)
+
+    def selected_in_product_directions(self, string):
+        if string in self.directions:
+            add_to_selected_categories(**self.kwargs)
+            return {'next_step': 'OfferToChooseBranchOfApplicationStep', 'right_away': False}
+
+    def select_featured_category(self, string):
+        if string == 'Вернуться к основным направлениям':
+            return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
 
 
 class OfferToChooseBranchOfApplicationStep(Step):
@@ -127,29 +136,38 @@ class OfferToChooseBranchOfApplicationStep(Step):
         self.set_buttons(self.get_branches_of_application)
 
         self.add_client_answer_case(self.selected_in_product_branches_of_application)
+        self.add_client_answer_case(self.select_other_category)
 
     def selected_in_product_branches_of_application(self, string):
         if string in self.get_branches_of_application:
             add_to_selected_categories(**self.kwargs)
-            return {'next_step': 'OfferToChooseMoreBranchesOfApplicationStep', 'right_away': False}
+            return {'next_step': 'SendingProductsStep', 'right_away': False}
+
+    def select_other_category(self, string):
+        if string == 'Выбрать другую отрасль применения':
+            return {'next_step': 'ChooseOtherBranchOfApplicationStep', 'right_away': False}
 
 
-class OfferToChooseMoreBranchesOfApplicationStep(Step):
+class ChooseOtherBranchOfApplicationStep(Step):
     def __init__(self, **kwargs):
-        self.set_answer_text('Хотите выбрать еще одну отрасль применения?')
+        self.kwargs = kwargs
+        self.set_answer_text('Выберите отрасль применения продукта, которая вас интересует:')
         self.set_send_buttons(True)
-        self.set_buttons(['да', 'нет'])
 
-        self.add_client_answer_case(self.accept)
-        self.add_client_answer_case(self.decline)
+        self.get_branches_of_application = get_branches_of_application(**kwargs)
+        self.set_buttons(self.get_branches_of_application)
 
-    def accept(self, string):
-        if string == 'да':
+        self.add_client_answer_case(self.selected_in_product_branches_of_application)
+        self.add_client_answer_case(self.select_featured_category)
+
+    def selected_in_product_branches_of_application(self, string):
+        if string in self.get_branches_of_application:
+            add_to_selected_categories(**self.kwargs)
+            return {'next_step': 'SendingProductsStep', 'right_away': False}
+
+    def select_featured_category(self, string):
+        if string == 'Вернуться к основным областям применения':
             return {'next_step': 'OfferToChooseBranchOfApplicationStep', 'right_away': False}
-
-    def decline(self, string):
-        if string == 'нет':
-            return {'next_step': 'SendingProductsStep', 'right_away': True}
 
 
 class SendingProductsStep(Step):
