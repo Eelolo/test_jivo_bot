@@ -30,9 +30,9 @@ class DataFromJivoView(View):
             'SpecifyNameStep': SpecifyNameStep, 'SpecifyPhoneStep': SpecifyPhoneStep,
             'AcceptSpecifyingContactsStep': AcceptSpecifyingContactsStep,
             'OfferToChooseDirectionStep': OfferToChooseDirectionStep,
-            'OfferToChooseMoreDirectionsStep': OfferToChooseMoreDirectionsStep,
+            'OfferToChooseMoreDirectionsStep': ChooseOtherDirectionsStep,
             'OfferToChooseBranchOfApplicationStep': OfferToChooseBranchOfApplicationStep,
-            'OfferToChooseMoreBranchesOfApplicationStep': OfferToChooseMoreBranchesOfApplicationStep,
+            'OfferToChooseMoreBranchesOfApplicationStep': ChooseOtherBranchOfApplicationStep,
             'SendingProductsStep': SendingProductsStep, 'SendingCoursesStep': SendingCoursesStep,
             'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep,
         }
