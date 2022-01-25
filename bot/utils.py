@@ -53,7 +53,7 @@ def get_or_create_instances(chat_id, client_id):
 
 
 def get_directions(**kwargs):
-    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/'
+    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/?limit=5'
     data = deserialize_data(requests.get(url).content)
 
     directions = []
@@ -64,7 +64,7 @@ def get_directions(**kwargs):
 
 
 def get_branches_of_application(**kwargs):
-    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/'
+    url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/?limit=5'
     data = deserialize_data(requests.get(url).content)
 
     branches_of_application = []
@@ -87,7 +87,7 @@ def get_selected_categories(chat_id):
 
 def get_products_from_categories(categories):
     url = 'https://static.my.cadfem-cis.ru/api/shop/containers/' \
-          '?fields[]=id&fields[]=short_title&category__in[]=1'  # заранее из категории программные продукты
+          '?limit=5&fields[]=id&fields[]=short_title&category__in[]=1'  # заранее из категории программные продукты
 
     for category in categories:
         url += f'&category__in[]={category}'
@@ -132,7 +132,7 @@ def get_related_courses(**kwargs):
     if products:
         for idx in range(randint(0, len(products)), randint(0, len(products)), randint(0, len(products))):
             url = f'https://static.my.cadfem-cis.ru/api/shop/containers/{idx}/learning-course/' \
-                  '?limit=3&fields[]=id&fields[]=short_title&f'
+                  '?limit=5&fields[]=id&fields[]=short_title&f'
             data = deserialize_data(requests.get(url).content).get('results', [])
             titles = [result['short_title'] for result in data]
             courses.extend(titles)
