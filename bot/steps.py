@@ -189,6 +189,7 @@ class SendingProductsStep(Step):
 
 class OfferToFindRelatedCoursesStep(Step):
     def __init__(self, **kwargs):
+        self.kwargs = kwargs
         self.set_answer_text('Хотите посмотреть учебные курсы по найденным продуктам?')
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
