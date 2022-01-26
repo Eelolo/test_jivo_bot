@@ -35,6 +35,7 @@ class DataFromJivoView(View):
             'ChooseOtherBranchOfApplicationStep': ChooseOtherBranchOfApplicationStep,
             'SendingProductsStep': SendingProductsStep, 'SendingCoursesStep': SendingCoursesStep,
             'OfferToFindRelatedCoursesStep': OfferToFindRelatedCoursesStep,
+            'SecondTryToCollectContacts': SecondTryToCollectContacts
         }
 
         # try:
