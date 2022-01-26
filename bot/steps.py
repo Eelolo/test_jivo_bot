@@ -207,6 +207,7 @@ class OfferToFindRelatedCoursesStep(Step):
 
 class SendingCoursesStep(Step):
     def __init__(self, **kwargs):
+        self.kwargs = kwargs
         self.set_answer_text(get_related_courses(**kwargs))
         self.add_client_answer_case(self.run_anyway)
 
