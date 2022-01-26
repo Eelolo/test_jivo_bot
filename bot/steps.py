@@ -4,10 +4,11 @@ from bot.utils import (
     get_products_from_categories_text, get_related_courses, save_client_name,
     save_client_phone
 )
-
+from .models import ChatClient
 
 class OfferToHelpStep(Step):
     def __init__(self, **kwargs):
+        self.kwargs = kwargs
         self.set_answer_text('Здравствуйте! Позвольте помочь вам определиться с выбором продукта.')
         self.set_send_buttons(True)
         self.set_buttons(['да', 'нет'])
@@ -17,7 +18,10 @@ class OfferToHelpStep(Step):
 
     def accept(self, string):
         if string == 'да':
-            return {'next_step': 'OfferToSpecifyContactsStep', 'right_away': False}
+            if ChatClient.objects.get(client_id=self.kwargs['client_id']).has_contacts:
+                return {'next_step': 'OfferToChooseDirectionStep', 'right_away': False}
+            else:
+                return {'next_step': 'OfferToSpecifyContactsStep', 'right_away': False}
 
     def decline(self, string):
         if string == 'нет':
@@ -75,10 +79,14 @@ class SpecifyPhoneStep(Step):
 
 class AcceptSpecifyingContactsStep(Step):
     def __init__(self, **kwargs):
+        self.kwargs = kwargs
         self.set_answer_text('Спасибо, теперь мы точно сможем вам помочь, в случае возникновения проблем.')
         self.add_client_answer_case(self.run_anyway)
 
     def run_anyway(self, string):
+        client = ChatClient.objects.get(client_id=self.kwargs['client_id'])
+        client.has_contacts = True
+        client.save()
         return {'next_step': 'OfferToChooseDirectionStep', 'right_away': True}
 
 
@@ -110,7 +118,7 @@ class ChooseOtherDirectionsStep(Step):
         self.set_answer_text('Выберите направление продукта, которое вас интересует:')
         self.set_send_buttons(True)
 
-        self.directions = get_directions(**kwargs)
+        self.directions = get_directions(**kwargs, featured=False)
         self.set_buttons(self.directions + ['Вернуться к основным направлениям'])
 
         self.add_client_answer_case(self.selected_in_product_directions)
@@ -154,7 +162,7 @@ class ChooseOtherBranchOfApplicationStep(Step):
         self.set_answer_text('Выберите отрасль применения продукта, которая вас интересует:')
         self.set_send_buttons(True)
 
-        self.get_branches_of_application = get_branches_of_application(**kwargs)
+        self.get_branches_of_application = get_branches_of_application(**kwargs, featured=False)
         self.set_buttons(self.get_branches_of_application + ['Вернуться к основным областям применения'])
 
         self.add_client_answer_case(self.selected_in_product_branches_of_application)
@@ -203,4 +211,25 @@ class SendingCoursesStep(Step):
         self.add_client_answer_case(self.run_anyway)
 
     def run_anyway(self, string):
-        return {'next_step': 'PartingStep', 'right_away': False}
+        if ChatClient.objects.get(client_id=self.kwargs['client_id']).has_contacts:
+            return {'next_step': 'PartingStep', 'right_away': False}
+        else:
+            return {'next_step': 'SecondTryToCollectContacts', 'right_away': False}
+
+
+class SecondTryToCollectContacts(Step):
+    def __init__(self, **kwargs):
+        self.set_answer_text('Если вы передумали, то вы всё еще можете оставить нам свои контакты.')
+        self.set_send_buttons(True)
+        self.set_buttons(['да', 'нет'])
+
+        self.add_client_answer_case(self.accept)
+        self.add_client_answer_case(self.decline)
+
+    def accept(self, string):
+        if string == 'да':
+            return {'next_step': 'SpecifyNameStep', 'right_away': False}
+
+    def decline(self, string):
+        if string == 'нет':
+            return {'next_step': 'PartingStep', 'right_away': False}

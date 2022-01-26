@@ -54,6 +54,12 @@ def get_or_create_instances(chat_id, client_id):
 
 def get_directions(**kwargs):
     url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/'
+
+    if kwargs.get('featured') and kwargs.get('featured') == 'True':
+        url += '?featured=True'
+    elif kwargs.get('featured') and kwargs.get('featured') == 'False':
+        url += '?featured=False'
+
     data = deserialize_data(requests.get(url).content)
 
     directions = []
@@ -65,6 +71,12 @@ def get_directions(**kwargs):
 
 def get_branches_of_application(**kwargs):
     url = 'https://static.my.cadfem-cis.ru/api/shop/containers/categories/'
+
+    if 'featured' in kwargs.keys() and not kwargs['featured']:
+        url += '?featured=False'
+    else:
+        url += '?featured=True'
+
     data = deserialize_data(requests.get(url).content)
 
     branches_of_application = []

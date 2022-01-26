@@ -17,6 +17,7 @@ class ChatClient(models.Model):
     client_id = models.PositiveIntegerField(verbose_name='Jivo client id')
     name = models.CharField(max_length=150, null=True, blank=True, verbose_name='Имя')
     phone = models.CharField(max_length=25, null=True, blank=True, verbose_name='Телефон')
+    has_contacts = models.BooleanField(default=False)
 
 
 class Message(models.Model):
