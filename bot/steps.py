@@ -255,7 +255,7 @@ class SpecifyPhoneBeforePartingStep(Step):
 
     def run_anyway(self, string):
         save_client_phone(**self.kwargs)
-        return {'next_step': 'AcceptSpecifyingContactsStep', 'right_away': True}
+        return {'next_step': 'AcceptSpecifyingContactsBeforePartingStep', 'right_away': True}
 
 
 class AcceptSpecifyingContactsBeforePartingStep(Step):
