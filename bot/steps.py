@@ -229,8 +229,43 @@ class SecondTryToCollectContacts(Step):
 
     def accept(self, string):
         if string == 'да':
-            return {'next_step': 'SpecifyNameStep', 'right_away': False}
+            return {'next_step': 'SpecifyNameBeforePartingStep', 'right_away': False}
 
     def decline(self, string):
         if string == 'нет':
             return {'next_step': 'PartingStep', 'right_away': False}
+
+
+class SpecifyNameBeforePartingStep(Step):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.set_answer_text('Напишите как к вам можно будет обратиться.')
+        self.add_client_answer_case(self.run_anyway)
+
+    def run_anyway(self, string):
+        save_client_name(**self.kwargs)
+        return {'next_step': 'SpecifyPhoneBeforePartingStep', 'right_away': False}
+
+
+class SpecifyPhoneBeforePartingStep(Step):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.set_answer_text('Укажите ваш номер телефона.')
+        self.add_client_answer_case(self.run_anyway)
+
+    def run_anyway(self, string):
+        save_client_phone(**self.kwargs)
+        return {'next_step': 'AcceptSpecifyingContactsStep', 'right_away': True}
+
+
+class AcceptSpecifyingContactsBeforePartingStep(Step):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.set_answer_text('Спасибо, теперь мы точно сможем вам помочь, в случае возникновения проблем.')
+        self.add_client_answer_case(self.run_anyway)
+
+    def run_anyway(self, string):
+        client = ChatClient.objects.get(client_id=self.kwargs['client_id'])
+        client.has_contacts = True
+        client.save()
+        return {'next_step': 'PartingStep', 'right_away': True}
