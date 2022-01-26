@@ -142,7 +142,7 @@ def get_related_courses(**kwargs):
     from random import randint
     courses = []
     if products:
-        for idx in range(randint(0, len(products)), randint(0, len(products)), randint(0, len(products))):
+        for idx in range(randint(0, len(products)), randint(0, len(products)), randint(1, len(products))):
             url = f'https://static.my.cadfem-cis.ru/api/shop/containers/{idx}/learning-course/' \
                   '?limit=5&fields[]=id&fields[]=short_title&f'
             data = deserialize_data(requests.get(url).content).get('results', [])

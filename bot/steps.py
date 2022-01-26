@@ -202,7 +202,10 @@ class OfferToFindRelatedCoursesStep(Step):
 
     def decline(self, string):
         if string == 'нет':
-            return {'next_step': 'PartingStep', 'right_away': False}
+            if ChatClient.objects.get(client_id=self.kwargs['client_id']).has_contacts:
+                return {'next_step': 'PartingStep', 'right_away': False}
+            else:
+                return {'next_step': 'SecondTryToCollectContacts', 'right_away': False}
 
 
 class SendingCoursesStep(Step):
@@ -268,4 +271,4 @@ class AcceptSpecifyingContactsBeforePartingStep(Step):
         client = ChatClient.objects.get(client_id=self.kwargs['client_id'])
         client.has_contacts = True
         client.save()
-        return {'next_step': 'PartingStep', 'right_away': True}
+        return {'next_step': 'PartingStep', 'right_away': False}
