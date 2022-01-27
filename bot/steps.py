@@ -6,6 +6,7 @@ from bot.utils import (
 )
 from .models import ChatClient
 
+
 class OfferToHelpStep(Step):
     def __init__(self, **kwargs):
         self.kwargs = kwargs

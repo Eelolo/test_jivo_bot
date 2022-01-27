@@ -7,6 +7,7 @@ import requests
 
 class Bot:
     def __init__(self, data, first_step, steps):
+        print(data)
         self.event_id = data.get('id', False)
         self.client_id = data.get('client_id', False)
         self.chat_id = data.get('chat_id', False)
