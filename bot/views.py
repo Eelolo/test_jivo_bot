@@ -11,7 +11,12 @@ from .steps import *
 
 class IndexPageView(View):
     def get(self, request):
-        return render(request, "index.html")
+        return render(request, "jivo_chat_for_static.html")
+
+
+class SecondPageView(View):
+    def get(self, request):
+        return render(request, "jivo_chat_for_vdev.html")
 
 
 @method_decorator((csrf_exempt,), name='dispatch')
