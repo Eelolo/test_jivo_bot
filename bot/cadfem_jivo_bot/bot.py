@@ -93,6 +93,7 @@ class Bot:
 
     def send_message(self, payload):
         requests.post(
-            'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
+            # 'https://bot.jivosite.com/webhooks/dFYp2pkeg9lMsRQ/n1G0JfmBvjnXyjA',
+            'https://bot.jivosite.com/webhooks/HH9GS8AiZwJNRCO/szejhv5lun27o',
             json=payload
         )
