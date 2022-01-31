@@ -19,7 +19,7 @@ class SecondPageView(View):
         return render(request, "jivo_chat_for_vdev.html")
 
 
-@method_decorator((csrf_exempt,), name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class DataFromJivoView(View):
     http_method_names = ['post']
 
